@@ -5,6 +5,8 @@
 #ifndef ADVENTUREGAME_MONSTER_H
 #define ADVENTUREGAME_MONSTER_H
 
+#include <common.h>
+
 class Monster {
 public:
     // 初始化怪物属性

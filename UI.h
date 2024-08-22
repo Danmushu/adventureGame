@@ -5,7 +5,7 @@
 #ifndef ADVENTUREGAME_UI_H
 #define ADVENTUREGAME_UI_H
 
-#include <HeadFile.h>
+#include <common.h>
 
 class UI {
 public:
@@ -16,13 +16,13 @@ public:
     void displayRoomMap(const Map &map, const Player &player);
 
     // 显示游戏日志
-    void displayEventLog(const std::vector<std::string> &logs);
+    void displayEventLog(const vector<string> &logs);
 
     // 显示战斗面板，包括怪物的属性
     void displayBattlePanel(const Player &player, const std::vector<Monster> &monsters);
 
     // 渲染整个界面
-    void renderUI(const Player &player, const Map &map, const std::vector<std::string> &logs, const std::vector<Monster> &monsters);
+    void renderUI(const Player &player, const Map &map, const vector<string> &logs, const vector<Monster> &monsters);
 };
 
 

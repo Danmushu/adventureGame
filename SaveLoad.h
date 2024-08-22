@@ -5,7 +5,9 @@
 #ifndef ADVENTUREGAME_SAVELOAD_H
 #define ADVENTUREGAME_SAVELOAD_H
 
-#include <HeadFile.h>
+#include <common.h>
+
+class Map;
 
 class SaveLoad {
 public:
@@ -16,7 +18,7 @@ public:
     void loadGame(Player &player, Map &map);
 
 private:
-    std::string saveFile = "game_save.txt";
+    string saveFile = "game_save.txt";
 };
 
 

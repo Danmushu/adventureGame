@@ -29,3 +29,9 @@ OUC cpp project
 └── README.md             // 项目说明文件
 ```
 # Some statment
+
+            item                                         creature                                   window  
+        |               |                             |             |                              |        |    
+    weapon              drug                        player          monster                        map      puzzle
+  |     |           |       |       |                              |        |                   |           
+sword   shield      health  attack  special                        boss     demon          level(1-3)  

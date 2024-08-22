@@ -5,19 +5,17 @@
 #ifndef ADVENTUREGAME_ITEM_H
 #define ADVENTUREGAME_ITEM_H
 
-#include <HeadFile.h>
+#include <common.h>
+class Player;
 
 class Item {
 public:
     // 初始化物品属性
     void initializeItem(int itemId);
 
-    // 使用物品
-    void use(Player &player);
-
 private:
-    string name;
-    ItemType type; // 攻击类、回复类、效果类
+    string name; //物品名
+    int type; // 攻击类(1)、回复类(2)、效果类(3)
     int value;     // 伤害、回复量、属性提升量
 };
 

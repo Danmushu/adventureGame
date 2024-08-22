@@ -5,7 +5,8 @@
 #ifndef ADVENTUREGAME_MAP_H
 #define ADVENTUREGAME_MAP_H
 
-#include <HeadFile.h>
+#include <common.h>
+class Puzzle;
 
 class Map {
 public:

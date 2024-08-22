@@ -5,6 +5,9 @@
 #ifndef ADVENTUREGAME_PLAYER_H
 #define ADVENTUREGAME_PLAYER_H
 
+#include <common.h>
+class Item;
+
 class Player {
 public:
     // 初始化玩家属性
@@ -14,19 +17,19 @@ public:
     void levelUp();
 
     // 管理玩家物品
-    void useItem(int itemId);
+    void useItem(int itemId);//使用
     void addItem(Item item);
 
     // 显示玩家状态
     void displayStatus();
 
 private:
-    int strength;
-    int agility;
-    int health;
-    int experience;
-    int level;
-    std::vector<Item> inventory; // 物品列表
+    int strength; //力量
+    int agility; //敏捷-闪避
+    int health; //血量
+    int experience; // 当前节点
+    int level; //级别
+    vector<Item> inventory; // 物品列表
 };
 
 

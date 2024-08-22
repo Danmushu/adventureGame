@@ -5,19 +5,20 @@
 #ifndef ADVENTUREGAME_BATTLE_H
 #define ADVENTUREGAME_BATTLE_H
 
-#include <HeadFile.h>
+#include <common.h>
+class Monster;
 
 class Battle {
 public:
     // 构造函数：初始化战斗
-    Battle(Player &player, std::vector<Monster> &monsters);
+    Battle(Player &player, vector<Monster> &monsters);
 
     // 开始战斗
     void startBattle();
 
 private:
     Player &player;
-    std::vector<Monster> &monsters;
+    vector<Monster> &monsters;
     bool battleOver;
     bool playerVictory;
 

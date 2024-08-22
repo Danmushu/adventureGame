@@ -5,7 +5,7 @@
 #ifndef ADVENTUREGAME_PUZZLE_H
 #define ADVENTUREGAME_PUZZLE_H
 
-#include <HeadFile.h>
+#include <common.h>
 
 class Puzzle {
 public:
