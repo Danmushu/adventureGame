@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <synchapi.h>
 using namespace std;
 
 /*** 游戏头文件 ***/
