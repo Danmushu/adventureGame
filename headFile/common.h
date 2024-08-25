@@ -18,13 +18,6 @@
 using namespace std;
 
 /*** 游戏头文件 ***/
-#include <Player.h> //玩家
-#include <Item.h> //物品
-#include <Monster.h> //怪物
-#include <Puzzle.h> //解迷
-#include <Battle.h> //战斗
 
-#include <Map.h> //地图
-#include <SaveLoad.h> //数据存储
 
 #endif //ADVENTUREGAME_COMMON_H

@@ -49,64 +49,15 @@ cmake_ninja_workdir = D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/cmake-b
 
 build cmake_object_order_depends_target_adventureGame: phony || CMakeFiles/adventureGame.dir
 
-build CMakeFiles/adventureGame.dir/Player.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Player.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Player.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/Map.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Map.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Map.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/Monster.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Monster.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Monster.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/Item.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Item.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Item.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/Puzzle.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Puzzle.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Puzzle.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/Battle.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Battle.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Battle.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/UI.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/UI.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\UI.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
-build CMakeFiles/adventureGame.dir/SaveLoad.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/SaveLoad.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\SaveLoad.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
 build CMakeFiles/adventureGame.dir/main.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/main.cpp || cmake_object_order_depends_target_adventureGame
   DEP_FILE = CMakeFiles\adventureGame.dir\main.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
+  OBJECT_DIR = CMakeFiles\adventureGame.dir
+  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
+
+build CMakeFiles/adventureGame.dir/Creature.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Creature.cpp || cmake_object_order_depends_target_adventureGame
+  DEP_FILE = CMakeFiles\adventureGame.dir\Creature.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
   OBJECT_DIR = CMakeFiles\adventureGame.dir
@@ -120,7 +71,7 @@ build CMakeFiles/adventureGame.dir/main.cpp.obj: CXX_COMPILER__adventureGame_uns
 #############################################
 # Link the executable adventureGame.exe
 
-build adventureGame.exe: CXX_EXECUTABLE_LINKER__adventureGame_Debug CMakeFiles/adventureGame.dir/Player.cpp.obj CMakeFiles/adventureGame.dir/Map.cpp.obj CMakeFiles/adventureGame.dir/Monster.cpp.obj CMakeFiles/adventureGame.dir/Item.cpp.obj CMakeFiles/adventureGame.dir/Puzzle.cpp.obj CMakeFiles/adventureGame.dir/Battle.cpp.obj CMakeFiles/adventureGame.dir/UI.cpp.obj CMakeFiles/adventureGame.dir/SaveLoad.cpp.obj CMakeFiles/adventureGame.dir/main.cpp.obj
+build adventureGame.exe: CXX_EXECUTABLE_LINKER__adventureGame_Debug CMakeFiles/adventureGame.dir/main.cpp.obj CMakeFiles/adventureGame.dir/Creature.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\adventureGame.dir
