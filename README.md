@@ -39,7 +39,6 @@ project_root/
 ├── src/                  # 源文件
 │   ├── creature/         # 生物基类的源文件
 │   │   ├── Creature.cpp
-│   ├── player/           # 玩家相关的源文件
 │   │   ├── Player.cpp
 │   │   ├── PlayerController.cpp
 │   │   ├── PlayerView.cpp
