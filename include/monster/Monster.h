@@ -7,6 +7,7 @@
 #pragma once
 
 #include "../creature/creature.h"
+#include <string>
 
 class Monster : public Creature {
 private:
@@ -14,27 +15,21 @@ private:
     std::string description;
 
 public:
-    Monster();
-    Monster(std::string name, bool isBoss);
-    virtual ~Monster() {}
-
-    bool getBoss() const;
-    void setBoss(bool isBoss);
-
-    void readMonsterData(int monsterNumber);
+    // 默认构造函数
+    Monster() : Creature(), isBoss(false) {}
+    // 带参数的构造函数
+    Monster(std::string name, bool isBoss) : Creature(name), isBoss(isBoss) {}
+    // 析构函数
+    ~Monster() override = default;
+    // 获取是否为Boss
+    bool getBoss() const { return isBoss; }
+    // 设置是否为Boss
+    void setBoss(bool isBoss) { this->isBoss = isBoss; }
+//    // 读取怪物数据
+//    void readMonsterData(int id) {
+//        // 读取怪物数据的逻辑
+//        // load()从数据文件中读取对应id的数据
+//    }
 };
-
-// Monster 类的构造函数和成员函数实现
-Monster::Monster() : Creature(), isBoss(false), description("") {}
-
-Monster::Monster(std::string name, bool isBoss) : Creature(name), isBoss(isBoss), description("") {}
-
-bool Monster::getBoss() const { return isBoss; }
-void Monster::setBoss(bool isBoss) { this->isBoss = isBoss; }
-
-void Monster::readMonsterData(int monsterNumber) {
-    //todo
-    // 读取怪物数据的逻辑
-}
 
 #endif //ADVENTUREGAME_MONSTER_H

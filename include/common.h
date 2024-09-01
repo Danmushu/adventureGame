@@ -10,6 +10,18 @@
 #define MAP_WIDTH 300
 #define MAP_HEIGHT 500
 
+/*** 定义结构体 ***/
+typedef struct Feature{
+    int level;
+    int MaxHp;
+    int curHp;
+    int MaxMp;
+    int curMp;
+    int strength;
+    int defense;
+    int agility;
+}Feature;
+
 /*** 字体设置 ***/
 
 /*** 系统头文件 ***/

@@ -25,56 +25,73 @@ protected:
     int activateTime;          ///< 生效时间
 
 public:
-    Item();
-    Item(std::string name);
+    // 构造函数
+    Item() : name(""),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
+    Item(std::string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
+
+    // 虚析构函数
     virtual ~Item() {}
-
-    // 获取物品属性的方法
-    std::string getName() const;
-    int getAtk() const;
-    int getDef() const;
-    int getAgi() const;
-    int getRec() const;
-    int getDmg() const;
-    std::string getDes() const;
-    int getActTime() const;
-    int getMp() const;
-
-    // 设置物品属性的方法
-    void setName(std::string name);
-    void setAtk(int atk);
-    void setDef(int def);
-    void setAgi(int agi);
-    void setRec(int rec);
-    void setDmg(int dmg);
-    void setDes(std::string description);
-    void setActTime(int time);
-    void setMp(int mp);
+    // 获取物品名称
+    std::string getName() const { return name; }
+    // 获取攻击力加成
+    int getAtk() const { return attack; }
+    // 获取防御力加成
+    int getDef() const { return defense; }
+    // 获取敏捷度加成
+    int getAgi() const { return agility; }
+    // 获取恢复力加成
+    int getRec() const { return recovery; }
+    // 获取伤害值
+    int getDmg() const { return damage; }
+    // 获取物品描述
+    std::string getDes() const { return description; }
+    // 获取生效时间
+    int getActTime() const { return activateTime; }
+    // 获取魔法值消耗或加成
+    int getMp() const { return mp; }
+    // 设置物品名称
+    void setName(std::string name) { this->name = name; }
+    // 设置攻击力加成
+    void setAtk(int atk) { this->attack = atk; }
+    // 设置防御力加成
+    void setDef(int def) { this->defense = def; }
+    // 设置敏捷度加成
+    void setAgi(int agi) { this->agility = agi; }
+    // 设置恢复力加成
+    void setRec(int rec) { this->recovery = rec; }
+    // 设置伤害值
+    void setDmg(int dmg) { this->damage = dmg; }
+    // 设置物品描述
+    void setDes(std::string description) { this->description = description; }
+    // 设置生效时间
+    void setActTime(int time) { this->activateTime = time; }
+    // 设置魔法值消耗或加成
+    void setMp(int mp) { this->mp = mp; }
 };
 
-// Item 类的实现
-Item::Item() : name(""), description(""), attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
+/**
+ * @class Template
+ * @brief 派生类的基本内容
+ */
+// 派生类 Skill 的定义
+class Template : public Item {
+private:
+    int type;
 
-Item::Item(std::string name) : name(name), description(""), attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
+public:
+    Template() : Item(), type() {}
+    Template(int type) : Item(), type(type) {}
 
-std::string Item::getName() const { return name; }
-int Item::getAtk() const { return attack; }
-int Item::getDef() const { return defense; }
-int Item::getAgi() const { return agility; }
-int Item::getRec() const { return recovery; }
-int Item::getDmg() const { return damage; }
-std::string Item::getDes() const { return description; }
-int Item::getActTime() const { return activateTime; }
-int Item::getMp() const { return mp; }
+    ~Template() override = default;
 
-void Item::setName(std::string name) { this->name = name; }
-void Item::setAtk(int atk) { this->attack = atk; }
-void Item::setDef(int def) { this->defense = def; }
-void Item::setAgi(int agi) { this->agility = agi; }
-void Item::setRec(int rec) { this->recovery = rec; }
-void Item::setDmg(int dmg) { this->damage = dmg; }
-void Item::setDes(std::string description) { this->description = description; }
-void Item::setActTime(int time) { this->activateTime = time; }
-void Item::setMp(int mp) { this->mp = mp; }
+    int getType() const { return type; }
+    void setType(int type) { this->type = type; }
+};
+
+typedef Template Skill; ///< 技能类型 1.攻击法术 2.防御法术 3.治疗法术 4.遁走法术
+typedef Template Weapon; ///< 武器类型 1.剑 2.刀 3.甲 4.靴
+typedef Template Medicine; ///< 药物类型 1.狂暴 2.恢复 3.升级
+typedef Template Special; ///< 特殊 通关密钥
+
 
 #endif //ADVENTUREGAME_ITEM_H
