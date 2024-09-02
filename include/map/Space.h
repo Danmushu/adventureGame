@@ -9,8 +9,8 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include "../item/Item.h"
-#include "../monster/monster.h"
+#include "include/Item.h"
+#include "include/Monster.h"
 
 /**
  * @class Space

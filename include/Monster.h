@@ -6,7 +6,7 @@
 #define ADVENTUREGAME_MONSTER_H
 #pragma once
 
-#include "../creature/creature.h"
+#include "Creature.h"
 #include <string>
 
 class Monster : public Creature {

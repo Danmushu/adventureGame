@@ -6,8 +6,8 @@
 #define ADVENTUREGAME_PLAYER_H
 #pragma once
 
-#include "../creature/creature.h"
-#include "../map/map.h"
+#include "Creature.h"
+#include "include/map/map.h"
 #include <string>
 
 class Player : public Creature {

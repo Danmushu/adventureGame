@@ -9,7 +9,7 @@
 
 #include <string>
 #include <unordered_map>
-#include "../item/Item.h"
+#include "include/Item.h"
 
 class Creature {
 protected:

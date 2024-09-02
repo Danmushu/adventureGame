@@ -6,7 +6,8 @@
 #define ADVENTUREGAME_FIGHT_H
 
 #include <iostream>
-#include "player/Player.h"
+#include "Player.h"
+#include "Monster.h"
 
 // 战斗系统类
 class Battle {

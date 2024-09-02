@@ -5,7 +5,7 @@
 #ifndef ADVENTUREGAME_GAMECONTROLLER_H
 #define ADVENTUREGAME_GAMECONTROLLER_H
 #pragma once
-#include "player/Player.h"
+#include "Player.h"
 #include "map/space.h"
 #include "interface.h"
 

@@ -4,7 +4,7 @@
 #include "include/common.h"
 #include "include/GameController.h"
 #include "include/interface.h"
-#include "include/player/Player.h"
+#include "include/Player.h"
 
 using namespace std;
 
