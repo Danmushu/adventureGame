@@ -5,20 +5,24 @@
 #ifndef ADVENTUREGAME_INTERFACE_H
 #define ADVENTUREGAME_INTERFACE_H
 
-#include <ctime>
-//#include "Monster.h"
-#include <vector>
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <windows.h>
-#include <conio.h>
-#include <random>
-//#include "utils\\rand.h"
+#include <ctime>   // °üº¬´¦ÀíÊ±¼äÏà¹ØµÄ¿â
+//#include "Monster.h"   // ÓÃÓÚ¹ÖÎïÏà¹Ø¹¦ÄÜ£¬ÔİÊ±Î´Ê¹ÓÃ
+#include <vector>   // °üº¬´¦ÀíÏòÁ¿£¨¶¯Ì¬Êı×é£©µÄ¿â
+#include <iostream> // °üº¬ÊäÈëÊä³öÁ÷µÄ¿â
+#include <string>   // °üº¬´¦Àí×Ö·û´®µÄ¿â
+#include <fstream>  // °üº¬ÎÄ¼şÊäÈëÊä³öµÄ¿â
+#include <windows.h> // °üº¬Windows APIº¯ÊıµÄ¿â
+#include <conio.h>  // °üº¬¿ØÖÆÌ¨ÊäÈëÊä³öµÄ¿â£¬ÓÃÓÚ¼ì²â°´¼ü
+#include <random>   // °üº¬Ëæ»úÊıÉú³ÉµÄ¿â
+//#include "utils\\rand.h" // ×Ô¶¨ÒåµÄËæ»úÊıÉú³ÉÆ÷Í·ÎÄ¼ş£¬ÔİÊ±Î´Ê¹ÓÃ
 
-using namespace std;
+using namespace std; // Ê¹ÓÃ±ê×¼ÃüÃû¿Õ¼ä£¬ÒÔ¼ò»¯´úÂëÊéĞ´
 
-struct Menu {string name;};
+// ¶¨Òå²Ëµ¥½á¹¹Ìå£¬ÓÃÓÚ´æ´¢²Ëµ¥ÏîÃû³Æ
+struct Menu {
+    string name;  // ²Ëµ¥ÏîÃû³Æ
+};
+
 // ¶¨ÒåÓÎÏ·Ö÷²Ëµ¥µÄÑ¡Ïî
 Menu menu[3]{
         "ĞÂÓÎÏ·",  // ĞÂÓÎÏ·Ñ¡Ïî
@@ -26,97 +30,100 @@ Menu menu[3]{
         "ÍË³öÓÎÏ·"  // ÍË³öÓÎÏ·Ñ¡Ïî
 };
 
+// ¶¨ÒåÃüÃû¿Õ¼äPosControl£¬ÓÃÓÚ¿ØÖÆ¿ØÖÆÌ¨´°¿ÚµÄÎ»ÖÃºÍ¹â±êµÄ²Ù×÷
 namespace PosControl {
 
+    // »ñÈ¡ÆÁÄ»µÄ¿í¶ÈºÍ¸ß¶È
     int screen_width = GetSystemMetrics(SM_CXSCREEN);
     int screen_height = GetSystemMetrics(SM_CYSCREEN);
 
-    // ´°¿Ú³¤¿í
+    // ¶¨Òå´°¿ÚµÄ¿í¶ÈºÍ¸ß¶È
     struct Size {
-        int width;
-        int height;
-    } size = {1020, 860};
+        int width;  // ´°¿Ú¿í¶È
+        int height; // ´°¿Ú¸ß¶È
+    } size = {1020, 1020};  // ³õÊ¼»¯´°¿Ú´óĞ¡
 
+    // ½«´°¿Ú¾ÓÖĞÏÔÊ¾
     void centerWindow() {
-        HWND hwnd = GetForegroundWindow();
-        SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, size.width, size.height, 1);
+        HWND hwnd = GetForegroundWindow();  // »ñÈ¡µ±Ç°´°¿Ú¾ä±ú
+        SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, size.width, size.height, 1);  // ÉèÖÃ´°¿Ú´óĞ¡
         MoveWindow(hwnd, (screen_width - size.width) / 2, (screen_height - size.height) / 2, size.width, size.height,
-                   1);
+                   1);  // ½«´°¿ÚÒÆ¶¯µ½ÆÁÄ»ÖĞÑë
     }
 
-// »Øµ½×ø±êÎ»ÖÃ£¬×ø±êĞèÒª¸ø¶¨
+    // ½«¹â±êÒÆ¶¯µ½Ö¸¶¨µÄ¿ØÖÆÌ¨×ø±êÎ»ÖÃ
     void setPos(int x, int y) {
         COORD coord{static_cast<SHORT>(y), static_cast<SHORT>(x)};
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);  //»Øµ½¸ø¶¨µÄ×ø±êÎ»ÖÃ½øĞĞÖØĞÂÊä³ö
     }
 
-
-// »ñÈ¡µ±Ç°±ê×¼Êä³öÁ÷Î»ÖÃ
+    // »ñÈ¡µ±Ç°¹â±êµÄ×ø±êÎ»ÖÃ
     void getPos(int &x, int &y) {
         CONSOLE_SCREEN_BUFFER_INFO b;           // °üº¬¿ØÖÆÌ¨ÆÁÄ»»º³åÇøµÄĞÅÏ¢
-        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &b);    //  »ñÈ¡±ê×¼Êä³ö¾ä±ú
-        y = b.dwCursorPosition.X;
-        x = b.dwCursorPosition.Y;
+        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &b);    // »ñÈ¡±ê×¼Êä³ö¾ä±ú
+        y = b.dwCursorPosition.X;  // »ñÈ¡¹â±êµÄX×ø±ê
+        x = b.dwCursorPosition.Y;  // »ñÈ¡¹â±êµÄY×ø±ê
     }
 
-
+    // Òş²Ø¿ØÖÆÌ¨¹â±ê
     void HideCursor() {
         CONSOLE_CURSOR_INFO cursor;
-        cursor.bVisible = FALSE;
+        cursor.bVisible = FALSE;  // ½«¹â±êÉèÖÃÎª²»¿É¼û
         cursor.dwSize = sizeof(cursor);
-        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleCursorInfo(handle, &cursor);
+        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);  // »ñÈ¡±ê×¼Êä³ö¾ä±ú
+        SetConsoleCursorInfo(handle, &cursor);  // ÉèÖÃ¿ØÖÆÌ¨¹â±êĞÅÏ¢
     }
 }
 
+// Éú³ÉÖ¸¶¨·¶Î§ÄÚµÄËæ»úÕûÊı
 int randInt(int min, int max) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(min, max);
-    return dis(gen);
+    std::random_device rd;  // »ñÈ¡Ó²¼şËæ»úÊıÉú³ÉÆ÷
+    std::mt19937 gen(rd());  // Ê¹ÓÃMersenne TwisterËã·¨Éú³ÉËæ»úÊı
+    std::uniform_int_distribution<> dis(min, max);  // ¶¨Òå¾ùÔÈ·Ö²¼
+    return dis(gen);  // ·µ»ØÉú³ÉµÄËæ»úÊı
 }
 
+// ÔÚ¿ØÖÆÌ¨ÖĞÊä³öÖ¸¶¨ÎÄ¼şÖĞµÄÏûÏ¢
 void printMsg(string msgDir, bool singleLine = false, bool noCD = false) {
-    if (!singleLine) {
+    if (!singleLine) {  // Èç¹û²»ÊÇµ¥ĞĞÊä³ö
         cout << "°´ÏÂ ";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
         cout << "[Tab¼ü] ";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎÄ±¾ÑÕÉ«Îª°×É«
         cout << "Ìø¹ı±¾¶Î..." << endl << endl;
     }
-    ifstream msgFile(msgDir);
+    ifstream msgFile(msgDir);  // ´ò¿ªÏûÏ¢ÎÄ¼ş
     string msg;
     int x, y;
-    if (singleLine) {
-        PosControl::getPos(x, y);
+    if (singleLine) {  // Èç¹ûÊÇµ¥ĞĞÊä³ö
+        PosControl::getPos(x, y);  // »ñÈ¡µ±Ç°¹â±êÎ»ÖÃ
     }
     int x1 = x, y1 = y;
-    while (getline(msgFile, msg)) {
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    while (getline(msgFile, msg)) {  // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎÄ±¾ÑÕÉ«Îª°×É«
         if (singleLine) {
-            PosControl::setPos(x, y);
-            for (int i = x; i <= x1; i++) {
+            PosControl::setPos(x, y);  // ÉèÖÃ¹â±êÎ»ÖÃ
+            for (int i = x; i <= x1; i++) {  // Çå³ıµ±Ç°ĞĞÄÚÈİ
                 cout << "\33[2K" << endl;
             }
-            PosControl::setPos(x, y);
+            PosControl::setPos(x, y);  // ÖØĞÂÉèÖÃ¹â±êÎ»ÖÃ
         }
         bool flagTab = false;
-        for (char c: msg) {
-
-            if (c == '(') // set color to grey
+        for (char c: msg) {  // ±éÀúÏûÏ¢ÖĞµÄÃ¿¸ö×Ö·û
+            if (c == '(') // Èç¹ûÓöµ½'('£¬½«ÎÄ±¾ÑÕÉ«ÉèÖÃÎª»ÒÉ«
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
-            else if (c == ')') {// set color to white
+            else if (c == ')') {  // Èç¹ûÓöµ½')'£¬»Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
                 cout << c;
                 SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
                 continue;
             }
-            cout << c;
-            if (!flagTab) Sleep(5);
-            if (!noCD && kbhit()) {
+            cout << c;  // Êä³ö×Ö·û
+            if (!flagTab) Sleep(5);  // ÑÓ³ÙÊä³ö£¬Ä£Äâ´ò×ÖĞ§¹û
+            if (!noCD && kbhit()) {  // ¼ì²â°´¼ü£¬ÔÊĞíÌø¹ıÊä³ö
                 char c;
                 c = getch();
                 if (c == '\t') {
-                    flagTab = true;
+                    flagTab = true;  // Èç¹û°´ÏÂTab¼ü£¬Ìø¹ı±¾¶Î
                 }
             }
         }
@@ -125,165 +132,178 @@ void printMsg(string msgDir, bool singleLine = false, bool noCD = false) {
             SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
             system("pause");
         }
-        Sleep(100);
-        PosControl::getPos(x1, y1);
+        Sleep(100);  // ÑÓ³Ù
+        PosControl::getPos(x1, y1);  // »ñÈ¡¹â±êÎ»ÖÃ
+        // cout << "x1:" << x1 << ", y1:" << y1; //
         cout << endl;
     }
-    msgFile.close();
+    msgFile.close();  // ¹Ø±ÕÎÄ¼ş
 }
 
+// ÏÔÊ¾ÓÎÏ·»¶Ó­Ò³Ãæ
 void welcomePage() {
 
-    PosControl::centerWindow();
-    PosControl::HideCursor();
+    // ½«´°¿Ú¾ÓÖĞÏÔÊ¾£¬²¢Òş²Ø¹â±ê
+    PosControl::centerWindow();  // Ê¹ÓÃ´°¿Ú¹ÜÀíº¯Êı½«¿ØÖÆÌ¨´°¿Ú¾ÓÖĞÏÔÊ¾
+    PosControl::HideCursor();  // Òş²Ø¿ØÖÆÌ¨¹â±ê£¬ÒÔÌá¸ßÓÃ»§ÌåÑé
 
-    cout << "======================================================================================================="
+    // Êä³ö³õÊ¼·Ö¸îÏß£¬ÓÃÓÚÌáÊ¾ÓÃ»§µ÷Õû¿ØÖÆÌ¨×ÖÌå´óĞ¡
+    cout << "==================================================================================================="
          << endl;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-    cout << endl << "    ÇëÊ¹ÓÃ ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-    cout << "[Ctrl] ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-    cout << "+ ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-    cout << "¹öÂÖ ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+
+    // ÌáÊ¾ÓÃ»§ÈçºÎµ÷Õû×ÖÌå´óĞ¡
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎÄ±¾ÑÕÉ«Îª°×É«
+    cout << endl << "    ÇëÊ¹ÓÃ ";  // Êä³öÌáÊ¾ĞÅÏ¢
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
+    cout << "[Ctrl] ";  // ÌáÊ¾ÓÃ»§°´×¡Ctrl¼ü
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
+    cout << "+ ";  // Êä³ö¼ÓºÅ
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
+    cout << "¹öÂÖ ";  // ÌáÊ¾ÓÃ»§¹ö¶¯Êó±ê¹öÂÖ
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
     cout << "µ÷Õû¿ØÖÆÌ¨×ÖÌå´óĞ¡£¬È·±£ÒÔÉÏ·Ö¸îÏßÏÔÊ¾ÔÚÍ¬Ò»ĞĞ¡£"
          << endl;
+
+    // ÌáÊ¾ÓÃ»§°´ÏÂEnter¼ü¼ÌĞø
     cout << endl << "°´ÏÂ ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-    cout << "[Enter¼ü] ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
+    cout << "[Enter¼ü] ";  // ÌáÊ¾ÓÃ»§°´ÏÂEnter¼ü
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
     cout << "¼ÌĞø..." << endl;
-    while (1) {
-        if (kbhit()) {
+
+    // µÈ´ıÓÃ»§°´ÏÂEnter¼üÒÔ¼ÌĞø
+    while (true) {  // ÎŞÏŞÑ­»·£¬Ö±µ½ÓÃ»§°´ÏÂEnter¼ü
+        if (kbhit()) {  // ¼ì²âÊÇ·ñÓĞ°´¼ü°´ÏÂ
             char c;
-            c = getch();
-            if (c == '\r' || c == '\n') {
-                PosControl::setPos(0, 0);
-                cout << string(104, ' ')
-                     << endl;
-                cout << string(104, ' ')
-                     << endl;
-                cout << string(104, ' ')
-                     << endl;
-                cout << string(104, ' ')
-                     << endl;
-                cout << string(104, ' ')
-                     << endl;
-                PosControl::setPos(0, 0);
-                break;
+            c = getch();  // »ñÈ¡°´ÏÂµÄ¼ü
+            if (c == '\r' || c == '\n') {  // Èç¹û°´ÏÂEnter¼ü£¨ASCIIÂëÊÇ\r»ò\n£©
+                PosControl::setPos(0, 0);  // ½«¹â±êÒÆ¶¯µ½¿ØÖÆÌ¨µÄ(0, 0)Î»ÖÃ£¬×¼±¸Çå³ıÆÁÄ»ÄÚÈİ
+                //system("cls");
+                // Çå³ı¿ØÖÆÌ¨Êä³öµÄÎåĞĞ¿Õ°×ĞĞ£¬Ê¹¿ØÖÆÌ¨¿´ÆğÀ´Ïñ±»ÇåÆÁ
+                cout << string(104, ' ') << endl;
+                cout << string(104, ' ') << endl;
+                cout << string(104, ' ') << endl;
+                cout << string(104, ' ') << endl;
+                cout << string(104, ' ') << endl;
+                PosControl::setPos(0, 0);  // ÔÙ´Î½«¹â±êÒÆ¶¯µ½(0, 0)Î»ÖÃ£¬×¼±¸ÏÔÊ¾ĞÂµÄÄÚÈİ
+                break;  // ÍË³öÑ­»·£¬¼ÌĞøÖ´ĞĞ½ÓÏÂÀ´µÄ´úÂë
             }
         }
     }
 
-    printMsg("../assets/scene/startPage.txt");
+    // Êä³ö»¶Ó­Ò³ÃæµÄÎÄ±¾ÄÚÈİ£¬´ÓÎÄ¼ş "../assets/scene/startPage.txt" ÖĞ¶ÁÈ¡²¢ÏÔÊ¾
+    printMsg("../assets/scene/startPage.txt");  // µ÷ÓÃº¯ÊıÊä³ö¿ªÊ¼Ò³ÃæµÄÏûÏ¢£¬ÔÊĞíÓÃ»§Í¨¹ıTab¼üÌø¹ı
 
+    // ÏÔÊ¾¼ÓÔØ½ø¶ÈÌõ
     cout << endl << endl;
-    for (int i = 0; i < 103; i++) {
-        Sleep(5);
-        cout << "=";
+    for (int i = 0; i < 104; i++) {  // Êä³ö½ø¶ÈÌõµÄ³¤¶ÈÎª103¸ö×Ö·û
+        Sleep(5);  // ÑÓ³Ù5ºÁÃë£¬Ä£Äâ¼ÓÔØ¹ı³Ì
+        cout << "=";  // Êä³ö½ø¶ÈÌõµÄ·ûºÅ
     }
     cout << endl << endl;
 
-    int x, y;
-    PosControl::getPos(x, y);
-    int spaceLength = std::max((PosControl::size.width / 10 - 88) / 2 + 2, 0);
-    string space(spaceLength, ' ');
-    while (1) {
-        PosControl::setPos(x, y);
-        ifstream logoFile("./Assets/.logo");
+    // ÏÔÊ¾ÓÎÏ·Logo
+    int x, y;  // ¶¨Òå±äÁ¿±£´æµ±Ç°¹â±êÎ»ÖÃ
+    PosControl::getPos(x, y);  // »ñÈ¡µ±Ç°¹â±êÎ»ÖÃ£¬´æ´¢ÔÚxºÍyÖĞ
+    // cout << "x:" << x << ", y:" << y << endl; //
+    int spaceLength = std::max((PosControl::size.width / 10 - 88) / 2 + 2, 0);  // ¼ÆËãLogoÇ°ĞèÒªµÄ¿Õ¸ñÊıÁ¿£¬ÒÔÊ¹Æä¾ÓÖĞÏÔÊ¾
+    string space(spaceLength, ' ');  // ´´½¨Ò»¸ö°üº¬spaceLength¸ö¿Õ¸ñµÄ×Ö·û´®
+    while (true) {  // ÎŞÏŞÑ­»·£¬ÏÔÊ¾Logo£¬Ö±µ½ÓÃ»§°´ÏÂEnter¼ü
+        PosControl::setPos(x, y);  // ÉèÖÃ¹â±êÎ»ÖÃµ½³õÊ¼Î»ÖÃ
+        ifstream logoFile("../assets/.logo");  // ´ò¿ª´æ´¢LogoÄÚÈİµÄÎÄ¼ş
         string logo;
-        while (getline(logoFile, logo)) {
-            int color = randInt(1, 15);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-            Sleep(50);
-            cout << space << logo << endl;
+        while (getline(logoFile, logo)) {  // ÖğĞĞ¶ÁÈ¡LogoÎÄ¼şÄÚÈİ
+            int color = randInt(1, 15);  // Éú³ÉËæ»úÑÕÉ«£¨1µ½15Ö®¼äµÄÕûÊı£©
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);  // ÉèÖÃLogoÎÄ±¾ÑÕÉ«
+            Sleep(50);  // ÑÓ³Ù50ºÁÃë£¬Ôö¼ÓÏÔÊ¾Ğ§¹û
+            cout << space << logo << endl;  // Êä³öLogoÄÚÈİ£¬¾ÓÖĞÏÔÊ¾
         }
-        logoFile.close();
+        logoFile.close();  // ¹Ø±ÕLogoÎÄ¼ş
 
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        // ÌáÊ¾ÓÃ»§°´ÏÂEnter¼ü¼ÌĞø
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
         cout << endl << "°´ÏÂ ";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-        cout << "[Enter¼ü] ";
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎÄ±¾ÑÕÉ«ÎªºìÉ«
+        cout << "[Enter¼ü] ";  // ÌáÊ¾ÓÃ»§°´ÏÂEnter¼ü
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÑÕÉ«Îª°×É«
         cout << "¼ÌĞø..." << endl;
 
-        if (kbhit()) {
+        // ¼ì²âÓÃ»§°´ÏÂµÄ°´¼ü£¬Èç¹û°´ÏÂEnter¼üÔòÍË³öÑ­»·
+        if (kbhit()) {  // ¼ì²âÊÇ·ñÓĞ°´¼ü°´ÏÂ
             char c;
-            c = getch();
-            if (c == '\r' || c == '\n') {
-                PosControl::setPos(x + 7, 0);
-                break;
+            c = getch();  // »ñÈ¡°´ÏÂµÄ¼ü
+            if (c == '\r' || c == '\n') {  // Èç¹û°´ÏÂEnter¼ü£¨ASCIIÂëÊÇ\r»ò\n£©
+                PosControl::setPos(x + 9, 0);  // ½«¹â±êÎ»ÖÃÏÂÒÆ13ĞĞ£¬±ÜÃâºóĞøÄÚÈİ¸²¸Ç
+                break;  // ÍË³öÑ­»·£¬¼ÌĞøÖ´ĞĞ½ÓÏÂÀ´µÄ´úÂë
             }
         }
     }
 }
 
+
+// ²Ëµ¥Ñ¡ÏîÇĞ»»º¯Êı£¬·µ»ØÓÃ»§Ñ¡ÔñµÄ²Ëµ¥ÏîË÷Òı
 int switcher(Menu menu[], int length) {
-
-    int x, y;
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    int x, y;  // ÓÃÓÚ´æ´¢¹â±êÎ»ÖÃµÄ±äÁ¿
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃ¿ØÖÆÌ¨ÎÄ±¾ÊôĞÔÎªÁÁ°×É«
     cout << "Ê¹ÓÃ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃ¿ØÖÆÌ¨ÎÄ±¾ÊôĞÔÎªÁÁÂÌÉ«
     cout << " [W] [S] ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÔÙ´ÎÉèÖÃÎªÁÁ°×É«
     cout << "»ò";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎªÁÁÂÌÉ«
     cout << " [¡ü] [¡ı] ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎªÁÁ°×É«
     cout << "Ñ¡Ôñ£¬°´";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // ÉèÖÃÎªÁÁÂÌÉ«
     cout << " [Enter¼ü] ";
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎªÁÁ°×É«
     cout << "È·ÈÏ" << endl << endl;
-
+    // »ñÈ¡µ±Ç°¹â±êÎ»ÖÃ
     PosControl::getPos(x, y);
+    //cout << "switcher1->" <<"x:" << x << ", y:" << y << "<-switcher1" << endl;
+    // ÉèÖÃ¹â±êÎ»ÖÃµ½µÚÒ»ĞĞ¿ªÊ¼
     PosControl::setPos(x, 0);
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎÄ±¾ÊôĞÔÎªÁÁ°×É«
 
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) {  // ÏÔÊ¾²Ëµ¥Ïî
         cout << "    > " << menu[i].name << endl;
     }
     cout << endl;
     cout << "======================================================================================================="
          << endl;
 
-    char c;
-    int choice = 0;
-    int prevChoice = 0;
+    char c;  // ÓÃÓÚ´æ´¢ÓÃ»§ÊäÈëµÄ×Ö·û
+    int choice = 0;  // µ±Ç°Ñ¡ÔñµÄ²Ëµ¥ÏîË÷Òı
+    int prevChoice = 0;  // ÉÏÒ»¸öÑ¡ÔñµÄ²Ëµ¥ÏîË÷Òı
 
-    while (1) {
+    while (true) {  // ²Ëµ¥ÇĞ»»Ñ­»·
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // ÉèÖÃÎÄ±¾ÊôĞÔÎªÁÁ°×É«
+        PosControl::setPos(x + prevChoice, y);  // ÒÆ¶¯¹â±êµ½ÉÏÒ»¸öÑ¡ÔñµÄÎ»ÖÃ
+        cout << "    > " << menu[prevChoice].name;  // ÏÔÊ¾ÉÏÒ»¸ö²Ëµ¥Ïî
 
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-        PosControl::setPos(x + prevChoice, y);
-        cout << "    > " << menu[prevChoice].name;
-
-        PosControl::setPos(x + choice, y);
-        // [43;37mÊÇ»Æµ×°××Ö
-
-        cout << "    ";
+        PosControl::setPos(x + choice, y);  // ÒÆ¶¯¹â±êµ½µ±Ç°Ñ¡ÔñµÄÎ»ÖÃ
+        // ÉèÖÃ¸ßÁÁÏÔÊ¾£¬»Æµ×°××Ö
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED |
                                                                  FOREGROUND_GREEN | FOREGROUND_BLUE |
                                                                  BACKGROUND_RED | BACKGROUND_GREEN);
-        cout << "> " << menu[choice].name;
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-        c = getch();
+        cout << "    > " << menu[choice].name;  // ÏÔÊ¾µ±Ç°Ñ¡ÔñµÄ²Ëµ¥Ïî
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // »Ö¸´ÎÄ±¾ÊôĞÔÎªÁÁ°×É«
+        c = getch();  // »ñÈ¡ÓÃ»§°´¼ü
         switch (c) {
             case 'w':
             case 'W':
-            case 72: // 72ÊÇÉÏ¼ıÍ·
+            case 72: // 72ÊÇÉÏ¼ıÍ·µÄASCIIÂë
                 prevChoice = choice;
-                choice = (choice + length - 1) % length;
+                choice = (choice + length - 1) % length;  // ÇĞ»»µ½ÉÏÒ»¸ö²Ëµ¥Ïî
                 break;
             case 's':
             case 'S':
-            case 80: // 80ÊÇÏÂ¼ıÍ·
+            case 80: // 80ÊÇÏÂ¼ıÍ·µÄASCIIÂë
                 prevChoice = choice;
-                choice = (choice + 1) % length;
+                choice = (choice + 1) % length;  // ÇĞ»»µ½ÏÂÒ»¸ö²Ëµ¥Ïî
                 break;
             case '\r':
-            case '\n':
+            case '\n':  // Èç¹û°´ÏÂEnter¼ü£¬·µ»Øµ±Ç°Ñ¡ÔñµÄË÷Òı
                 return choice;
             default:
                 prevChoice = choice;
@@ -292,22 +312,22 @@ int switcher(Menu menu[], int length) {
     }
 }
 
+// ÏÔÊ¾ÓÎÏ·½áÊøÒ³Ãæ
 void goodbye() {
-    system("cls");
-    ifstream creditsLogoFile("./Assets/.credit_logo");
+    system("cls");  // Çå³ı¿ØÖÆÌ¨ÄÚÈİ
+    ifstream creditsLogoFile("../assets/.endLogo");  // ´ò¿ª½áÊøLogoÎÄ¼ş
     string logo;
-    while (getline(creditsLogoFile, logo)) {
+    while (getline(creditsLogoFile, logo)) {  // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
         cout << logo << endl;
-        Sleep(randInt(20, 50));
+        Sleep(randInt(20, 50));  // ÑÓ³ÙÊä³ö
     }
     creditsLogoFile.close();
-    ifstream creditsFile("./Assets/.credit");
+    ifstream creditsFile("../assets/.endPage");  // ´ò¿ª½áÊøÏûÏ¢ÎÄ¼ş
     string credits;
-    while (getline(creditsFile, credits)) {
+    while (getline(creditsFile, credits)) {  // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
         cout << credits << endl;
-        Sleep(randInt(20, 50));
+        Sleep(randInt(20, 50));  // ÑÓ³ÙÊä³ö
     }
     creditsFile.close();
 }
-
 #endif //ADVENTUREGAME_INTERFACE_H

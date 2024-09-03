@@ -15,19 +15,19 @@
 class Item {
 protected:
     std::string name;          ///< 物品名称
-    std::string description;   ///< 物品描述
+    std::string description;   ///< 物品描述 < 描述属性加成
     int attack;                ///< 攻击力加成
     int defense;               ///< 防御力加成
     int agility;               ///< 敏捷度加成
     int recovery;              ///< 恢复力加成
     int damage;                ///< 伤害值
     int mp;                    ///< 魔法值消耗或加成
-    int activateTime;          ///< 生效时间
+//    int activateTime;          ///< 生效时间
 
 public:
     // 构造函数
-    Item() : name(""),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
-    Item(std::string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0), activateTime(0) {}
+    Item() : name(""),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
+    Item(std::string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
 
     // 虚析构函数
     virtual ~Item() {}
@@ -46,7 +46,7 @@ public:
     // 获取物品描述
     std::string getDes() const { return description; }
     // 获取生效时间
-    int getActTime() const { return activateTime; }
+//    int getActTime() const { return activateTime; }
     // 获取魔法值消耗或加成
     int getMp() const { return mp; }
     // 设置物品名称
@@ -64,7 +64,7 @@ public:
     // 设置物品描述
     void setDes(std::string description) { this->description = description; }
     // 设置生效时间
-    void setActTime(int time) { this->activateTime = time; }
+//    void setActTime(int time) { this->activateTime = time; }
     // 设置魔法值消耗或加成
     void setMp(int mp) { this->mp = mp; }
 };

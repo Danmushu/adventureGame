@@ -6,26 +6,21 @@
 #define ADVENTUREGAME_GAMECONTROLLER_H
 #pragma once
 #include "Player.h"
-#include "map/space.h"
+#include "Space.h"
 #include "interface.h"
 
 /**
  * @class GameController
  * @brief 游戏的主要控制器，负责管理游戏的整体流程。
  */
-
-
-#include <iostream>
-#include <string>
-
 class GameController {
 private:
-    Player* player;
+    Player& player;
     Space* currentSpace;//真的需要吗
 
 public:
     // 构造函数
-    GameController() : player(nullptr), currentSpace(nullptr) {
+    GameController(Player& player) : player(player), currentSpace(nullptr) {
         // todo
         // 初始化代码
     }
@@ -33,7 +28,6 @@ public:
     // 析构函数
     ~GameController() {
         // 清理代码
-        delete player;
         delete currentSpace;
     }
 
