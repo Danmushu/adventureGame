@@ -12,8 +12,9 @@
 #include <iostream>
 #include "Item.h"
 #include "Monster.h"
-// 在std命名空间中对std::hash进行特化
+#include "fight.h"
 
+class Player;
 /**
  * @class Space
  * @brief 代表地图上的单个空间，包含物品、怪物及其相互关系。
@@ -22,11 +23,11 @@ class Space {
 private:
     std::string name;                               ///< 空间的名称
     std::string description;                        ///< 空间的描述
-    std::unordered_map<string, Item> items;                        ///< 空间中包含的物品列表
+    std::unordered_map<string, Item> items;         ///< 空间中包含的物品列表
     std::vector<Monster> monsters;                  ///< 空间中包含的怪物列表
-    bool accessibility;                                    ///< 是否可以通过此空间
+    bool accessibility;                             ///< 是否可以通过此空间
     std::unordered_map<Space*, std::vector<Item>> towards; ///< 通往其他空间的条件物品
-
+    //fight
 public:
     // 构造函数
     Space(string name="Unnamed Space"): name(name), description("A space with nothing special."), accessibility(false) {}
@@ -37,27 +38,22 @@ public:
         monsters.clear();
         towards.clear();
     }
-    // 描述空间
+    // todo 描述空间
     inline void describe() const {
         // todo
-//        std::cout << "Space Name: " << name << std::endl;
-//        std::cout << "Description: " << description << std::endl;
-//        std::cout << "Items: ";
-//        for (const auto& item : items) {
-//            std::cout << item.getName() << " ";
-//        }
-//        std::cout << std::endl;
-//        std::cout << "Monsters: ";
-//        for (const auto& monster : monsters) {
-//            std::cout << monster.getName() << " ";
-//        }
-//        std::cout << std::endl;
-//        std::cout << "Can pass: " << (accessibility ? "Yes" : "No") << std::endl;
     }
+    // 设置空间中的物品列表
+    void setItems(const std::unordered_map<std::string, Item>& newItems) { items = newItems; }
 
+    // 设置空间中的怪物列表
+    void setMonsters(const std::vector<Monster>& newMonsters) { monsters = newMonsters; }
+
+    // 设置通往其他空间的条件物品
+    void setTowards(const std::unordered_map<Space*, std::vector<Item>>& newTowards) { towards = newTowards; }
     // 获取空间名称
-    inline std::string getName() const { return name; }
-
+    std::string getName() const { return name; }
+    // 设置空间名字
+    void setName(string name) { this->name = name; }
     // 获取空间中的物品列表
      unordered_map<string, Item> getItems() const { return items; }
     // 重载==运算符
@@ -69,37 +65,33 @@ public:
     // 检查是否可以通过此空间
     inline bool getPass() const { return accessibility;}
 
-    // 获取空间的详细信息
+    // 获取空间的详细信息 todo
     inline bool getInfo() const {
-        // todo
         describe();
         return true;
     }
 
-    // 在空间内进行战斗 -> 调用fight.h中的函数
+    // 在空间内进行战斗 -> 调用fight.h中的函数 todo
     inline void fight() {
         if (monsters.empty()) {
             std::cout << "No monsters to fight in this space." << std::endl;
             return;
         }
-        // todo
         // 战斗逻辑
     }
 
     // 设置空间是否可以通过
-    inline void setPass(bool pass) { accessibility = pass; }
+    void setPass(bool pass) { accessibility = pass; }
 
     // 拾取空间中的物品
     Item pickUp(const std::string& name) {
        // todo
        auto it = items.find(name);
        if (it != items.end()) return it->second;
-
        else{
            cout << "这个物品不存在在这个空间" << endl;
+           return {};
        }
-
-
     }
 };
 // 在std命名空间中对std::hash进行特化

@@ -32,6 +32,8 @@ public:
     Map& getPos() { return map; }
     // 获取气值
     int getMp() const { return mp; }
+    // 获取提升境界所需要的气量
+    int getRequiredMp() const { return requiredMp; }
     // 打印技能列表
     void printSkillList() const {
         // 输出玩家技能列表
@@ -71,6 +73,19 @@ public:
     }
     // 设置气
     void setMp(int mp) { this->mp = mp; }
+    // 设置主要属性
+    void setMainFeature(int level, int maxHp, int curHp, int maxMp, int Mp, int str, int def, int agi)
+    {
+        setLevel(level);
+        setMaxHp(maxHp);
+        setCurHp(curHp);
+        setRequiredMp(maxMp);
+        setStr(str);
+        setDef(def);
+        setAgi(agi);
+    }
+    //设置气上限量
+    void setRequiredMp(int maxMp){ this->requiredMp = maxMp; }
     // 使用物品
     void useItem(std::string name) {
         // 使用物品逻辑

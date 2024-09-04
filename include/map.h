@@ -8,21 +8,20 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "Space.h"
 
 /**
  * @class Map
  * @brief 代表游戏地图的类，包含地图空间和当前进度等信息。
  */
-/**
- * @class Map
- * @brief 代表游戏地图的类，包含地图空间和当前进度等信息。
- */
+
 class Map {
 private:
-//    std::vector<std::vector<Space>> space;  ///< 2D数组，表示地图中的所有空间
+    unordered_map<Space, bool> accessibility;  ///< 2D数组，表示地图中的所有空间
     unordered_map<Space, Space> relation;
     int curProgress;                        ///< 当前地图的进度
+    shared_ptr<Space> curSpace;
 //    std::string curDefaultMsgDir;           ///< 当前默认消息的目录
 
 public:
@@ -41,7 +40,7 @@ public:
         Space mystery5("秘境5层");
         Space core("秘境核心");
 
-// 设定各个空间的关系（定义路径关系）
+        // 设定各个空间的关系（定义路径关系）
         relation[entrance] = mystery1;   // entrance -> mystery1  (秘境入口 -> 遗迹1层)
         relation[mystery1] = mystery2;   // mystery1 -> mystery2  (遗迹1层 -> 遗迹2层)
         relation[mystery2] = unknown;    // mystery2 -> unknown   (遗迹2层 -> 未知空间)
@@ -52,14 +51,17 @@ public:
         relation[mystery4] = interLayer; // mystery4 -> interLayer (遗迹4层 -> 中间层)
         relation[mystery5] = core;       // mystery5 -> core      (遗迹5层 -> 秘境核心)
 
-
+        for(auto &i:relation){
+            auto it = accessibility.find(i->first);
+            if (it != accessibility.end()) continue;
+            else accessibility[i.first] = false;
+        }
     }
 
-    // 获取指定位置的空间
-    Space* getLocation(int x, int y) {
-
-    }
-    // 获取当前进度
+    unordered_map<Space, bool> getAcc(){ return accessibility; }
+    // 获取指定位置的空间 { return curSpace; }
+    //    // 获取当前进度
+    shared_ptr<Space> getLocation()
     int getProgress() { return curProgress;}
     // 获取默认消息目录
 //    std::string getDefaultMsgDir() { return curDefaultMsgDir;}
