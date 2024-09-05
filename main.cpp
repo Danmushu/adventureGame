@@ -1,48 +1,89 @@
 //
 // Created by Danmu on 2024/8/22.
 //
-#include "headFile//common.h"
+#include "include/common.h"
+#include "include/GameController.h"
+#include "include/interface.h"
+#include "include/Player.h"
 
 using namespace std;
 
-int main(){
-    //é¢œè‰²ç¼–ç  color code
-    int colorCode =32;
+int main()
+{
 
-    //æ¸¸æˆåç§° Game Name
-    string gameName = "";//todo
-
-    //æ‰“å°åˆå§‹æ¸¸æˆç•Œé¢ print the openning menu of the game
-    cout<<"\n";
-    cout << "\t\t\t\t\t" << "\033[1;" << colorCode << "m";  // è®¾ç½®æ–‡æœ¬é¢œè‰²ä¸ºç»¿è‰²
-
-    // é€è¡Œæ‰“å°å¤§å·çš„æ¸¸æˆåå­—
-    //todo
-//    cout << endl << "    ******   *********    *****   *********  ***  *****   ******     ******  " << endl;
-//    cout << "  **    **     **    **   **   **     **     ***   **   **  **    **   **    **" << endl;
-//    cout << " **            **    **  **     **    **     ** ** **   **  **         **      " << endl;
-//    cout << " **            **    **  **     **    **     **  ****   **  **         **      " << endl;
-//    cout << " **            **    **  **     **    **     **   ***   **  **   ****  **       " << endl;
-//    cout << "  **    **     **    **   **   **     **     **    **   **   **    **   **    **" << endl;
-//    cout << "    ******   *********    *****       **     **    **   **    ******     ******  " << endl;
-
-    cout << "\033[0m";  // é‡ç½®æ–‡æœ¬é¢œè‰²
-    cout << "\n\n";
-
-    system("pause");
-    system("cls");
-
-    //æ•…äº‹èƒŒæ™¯
-    string background = "";//todo
-
-    for (int i = 0; i < background.size(); i++) {
-        cout << background[i];
-        Sleep(10);
+    //game.openningPage();
+    welcomePage();
+    int x, y; //ÓÃÓÚ´æ´¢¹â±êÎ»ÖÃ
+    string name; //Íæ¼ÒĞÕÃû
+    //»ñÈ¡¹â±êÎ»ÖÃ
+    PosControl::getPos(x, y);
+    // ÉèÖÃ¹â±êÎ»ÖÃµ½µ±Ç°ĞĞµÄÆğÊ¼Î»ÖÃ todo
+    PosControl::setPos(x, 0);
+    //Çå³ıµ±Ç°ĞĞÄÚÈİ
+    cout << "\33[2K";
+    // Íæ¼ÒÊäÈëÃû×Ö
+    cout <<  "ÇëÊäÈëÄãµÄÃû×Ö: ";
+    cin >> name;
+    // ÑéÖ¤Íæ¼ÒÊäÈëµÄÃû×ÖÊÇ·ñºÏ·¨
+    while (name.length() > 15 || name.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_") != string::npos) {
+        // Èç¹ûÃû×Ö²»ºÏ·¨£¬ÖØĞÂÉèÖÃ¹â±ê²¢ÌáÊ¾Íæ¼ÒÖØĞÂÊäÈë
+        PosControl::setPos(x, 0);
+        // Çå³ıµ±Ç°ĞĞÄÚÈİ
+        cout << "\33[2K" << endl;
+        // ¼ì²éÃû×ÖÊÇ·ñ°üº¬·Ç·¨×Ö·û»òÃû×Ö³¤¶ÈÊÇ·ñ³¬¹ı15¸ö×Ö·û
+        if (name.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_") != string::npos) {
+            // Èç¹û°üº¬·Ç·¨×Ö·û£¬ÌáÊ¾Íæ¼ÒÖØĞÂÊäÈëºÏ·¨Ãû×Ö
+            cout << "Ãû×ÖÖĞº¬ÓĞ·Ç·¨×Ö·û£¬ÇëÖØĞÂÊäÈë£º";
+        } else {
+            // Èç¹ûÃû×Ö¹ı³¤£¬ÌáÊ¾Íæ¼ÒÖØĞÂÊäÈë¶ÌÒ»µãµÄÃû×Ö
+            cout << "Ãû×Ö¹ı³¤£¬ÇëÖØĞÂÊäÈë£º";
+        }
+        cin >> name;  // ÖØĞÂ»ñÈ¡Íæ¼ÒÊäÈëµÄÃû×Ö
     }
-    cout << endl;
 
-    system("pause");
-    system("cls");
+    // Çå³ıÊäÈëÌáÊ¾ĞĞ
+    PosControl::setPos(x, 0);
 
-    /************* æ¸¸æˆå¼€å§‹ ****************/
+    // Ê¹ÓÃÍæ¼ÒÊäÈëµÄÃû×Ö´´½¨Ò»¸ö Player ¶ÔÏó
+    Player player(name);
+    //¿ªÊ¼½çÃæº¯Êı
+    GameController game(player);
+    // ÏòÍæ¼Ò´òÕĞºô²¢ÏÔÊ¾ÆäÃû×Ö
+    cout << "    ÄãºÃ£¬ÃûÎª ";
+    // ½«ÎÄ×ÖÑÕÉ«ÉèÖÃÎª»ÆÉ«
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN);
+    cout << name;
+    // »Ö¸´ÎÄ×ÖÑÕÉ«ÎªÄ¬ÈÏÖµ£¨°×É«£©
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    cout << " µÄÌ½ÏÕÕß" << endl;
+
+    // Êä³öÁ½ĞĞ¿ÕĞĞ£¬ÊÓ¾õÉÏÇåÀíÊä³öÇøÓò
+    string spaceLine(100, ' ');
+    cout << spaceLine << endl << spaceLine << endl
+         << spaceLine << endl << spaceLine << endl;
+
+    // todo
+    /********* ÓÎÏ·ÕæÕı¿ªÊ¼ *********/
+    // µ÷ÓÃ switcher º¯ÊıÏÔÊ¾Ö÷²Ëµ¥£¬²¢¸ù¾İÍæ¼ÒÑ¡ÔñÖ´ĞĞÏàÓ¦µÄ²Ù×÷
+    switch (switcher(menu, 3)) {
+        case 0:
+            // Èç¹ûÍæ¼ÒÑ¡ÔñÁË¡°ĞÂÓÎÏ·¡±£¬ÔòÆô¶¯ĞÂÓÎÏ·
+            cout << 0;
+            game.newGame();
+            break;
+        case 1:
+            // Èç¹ûÍæ¼ÒÑ¡ÔñÁË¡°¼ÓÔØÓÎÏ·¡±£¬Ôò¼ÓÔØÓÎÏ·Êı¾İ
+            cout << 1;
+//            loadGame(player);
+            break;
+        case 2:
+            // Èç¹ûÍæ¼ÒÑ¡ÔñÁË¡°ÍË³öÓÎÏ·¡±£¬ÔòÏÔÊ¾ÍË³öÒ³Ãæ£¬²¢ÍË³ö³ÌĞò
+            cout << 2;
+            goodbye();
+            system("pause");  // ÔİÍ£µÈ´ıÓÃ»§°´¼ü
+            return 0;  // ÍË³ö³ÌĞò
+    }
+
+
+    return 0;
 }

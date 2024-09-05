@@ -56,13 +56,6 @@ build CMakeFiles/adventureGame.dir/main.cpp.obj: CXX_COMPILER__adventureGame_uns
   OBJECT_DIR = CMakeFiles\adventureGame.dir
   OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
 
-build CMakeFiles/adventureGame.dir/Creature.cpp.obj: CXX_COMPILER__adventureGame_unscanned_Debug D$:/CS_Learning/Language/Cpp/mudGame/adventureGame/Creature.cpp || cmake_object_order_depends_target_adventureGame
-  DEP_FILE = CMakeFiles\adventureGame.dir\Creature.cpp.obj.d
-  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -ID:/CS_Learning/Language/Cpp/mudGame/adventureGame/.
-  OBJECT_DIR = CMakeFiles\adventureGame.dir
-  OBJECT_FILE_DIR = CMakeFiles\adventureGame.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target adventureGame
@@ -71,9 +64,9 @@ build CMakeFiles/adventureGame.dir/Creature.cpp.obj: CXX_COMPILER__adventureGame
 #############################################
 # Link the executable adventureGame.exe
 
-build adventureGame.exe: CXX_EXECUTABLE_LINKER__adventureGame_Debug CMakeFiles/adventureGame.dir/main.cpp.obj CMakeFiles/adventureGame.dir/Creature.cpp.obj
+build adventureGame.exe: CXX_EXECUTABLE_LINKER__adventureGame_Debug CMakeFiles/adventureGame.dir/main.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -Wl,-Bstatic  -leasyx  -lgdi32  -lole32  -Wl,-Bdynamic  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\adventureGame.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

@@ -1,0 +1,14 @@
+(用-->连接的地方代表这几个txt文件连续触发，中间不给自由操作的机会，箭头中间有字代表只是剧情上连续)
+[0] 先进入大门，触发Background/entry.txt --> BeforeFight/entry.txt --> AfterFight/entry.txt
+
+[1] 去第1层，触发 Background/layer1.txt --> BeforeFight/layer1.txt --> AfterFight/layerq.txt
+
+[2] 去2层，触发 Background/layer2.txt -移动到layer2-> Background/secretFormation.txt -->Background/secretRoom.txt --> Background/secret.txt
+
+[3] 去3层，触发 Background/layer3.txt --> BeforeFight/layer3.txt --> AfterFight/layer3.txt
+
+[4] 去4层，触发 Background/layer4.txt --> Background/secretDoor.txt --> Background/layer5.txt
+
+[5] 去5层，触发秘境核心 Background/core.txt
+
+注：新增了失败文本和胜利文本。在所有beforefight后和afterfight前要插入胜利文本和失败文本的判断。第
