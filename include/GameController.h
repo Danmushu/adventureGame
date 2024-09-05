@@ -14,7 +14,7 @@ using namespace DataControl;
 
 /**
  * @class GameController
- * @brief æ¸¸æˆçš„ä¸»è¦æ§åˆ¶å™¨ï¼Œè´Ÿè´£ç®¡ç†æ¸¸æˆçš„æ•´ä½“æµç¨‹ã€‚
+ * @brief ÓÎÏ·µÄÖ÷Òª¿ØÖÆÆ÷£¬¸ºÔğ¹ÜÀíÓÎÏ·µÄÕûÌåÁ÷³Ì¡£
  */
 class GameController {
 private:
@@ -22,191 +22,216 @@ private:
     shared_ptr<Space> curSpace;
 
 public:
-    // æ„é€ å‡½æ•°
+    // ¹¹Ôìº¯Êı
     GameController(Player& player) : player(player), curSpace(nullptr) {
         // todo
-        // åˆå§‹åŒ–ä»£ç 
+        // ³õÊ¼»¯´úÂë
     }
 
-    // ææ„å‡½æ•°
+    // Îö¹¹º¯Êı
     ~GameController() {
-        // æ¸…ç†ä»£ç 
-        delete curSpace;
+        // ÇåÀí´úÂë
+        curSpace.reset();
     }
 
-//    // å¼€å§‹é¡µé¢ todo
-//    void openningPage() {
-//        // todo
-//        // è¯»å–æ¸¸æˆå¼€å§‹æ•°æ®
-//        ifstream dataFile("../assets/scene/startPage.txt");
-//        string startPage;
-//        int spaceLength = std::max((PosControl::size.width / 10 - 88) / 2 + 2, 0);
-//        string space(spaceLength, ' ');;
-//        while (getline(dataFile, startPage)) {
-//            int color = randInt(1, 15);
-//            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-//            Sleep(50);
-//            cout << space << startPage << endl;
-//        }
-//        dataFile.close();
-//
-//    }
 
-    // æ£€æŸ¥æŒ‡å®šåç§°çš„æ•°æ®æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+    // ¼ì²éÖ¸¶¨Ãû³ÆµÄÊı¾İÎÄ¼şÊÇ·ñ´æÔÚ
     bool dataExist(const string &name) {
-        string fileName = name + ".dat";  // æ„é€ æ•°æ®æ–‡ä»¶çš„åç§°
-        std::ifstream dataFile(fileName);  // å°è¯•æ‰“å¼€æ–‡ä»¶
-        bool isOpen = dataFile.is_open();  // æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æˆåŠŸæ‰“å¼€
-        dataFile.close();  // å…³é—­æ–‡ä»¶
-        return isOpen;  // è¿”å›æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+        string fileName = name + ".dat";  // ¹¹ÔìÊı¾İÎÄ¼şµÄÃû³Æ
+        string path = "../save/" + fileName;
+        std::ifstream dataFile(path);  // ³¢ÊÔ´ò¿ªÎÄ¼ş
+        bool isOpen = dataFile.is_open();  // ¼ì²éÎÄ¼şÊÇ·ñ³É¹¦´ò¿ª
+        dataFile.close();  // ¹Ø±ÕÎÄ¼ş
+        return isOpen;  // ·µ»ØÎÄ¼şÊÇ·ñ´æÔÚ
     }
 
-    // ä¿å­˜ç©å®¶æ•°æ®åˆ°æ–‡ä»¶ todo
-    void saveData(Player &player) {
-        // åˆ›å»ºæ•°æ®æ–‡ä»¶ï¼Œå¦‚æœæ–‡ä»¶å·²å­˜åœ¨åˆ™è¦†ç›–
-        std::ofstream dataFile(player.getName() + ".dat", std::ios::trunc);
-        // ä¿å­˜ç©å®¶çš„ä¸»è¦å±æ€§
+    // ±£´æÍæ¼ÒÊı¾İµ½ÎÄ¼ş todo
+    void saveData() {
+        // ´´½¨Êı¾İÎÄ¼ş£¬Èç¹ûÎÄ¼şÒÑ´æÔÚÔò¸²¸Ç
+        std::ofstream dataFile("../save/" + player.getName() + ".dat", std::ios::trunc);
+        // ±£´æÍæ¼ÒµÄÖ÷ÒªÊôĞÔ
         dataFile << player.getLevel() << endl;
         dataFile << player.getMaxHp() << " " << player.getCurHp() << endl;
         dataFile << player.getRequiredMp() << " " << player.getMp() << endl;
         dataFile << player.getStr() << " " << player.getDef() << " " << player.getAgi() << endl;
-        // ä¿å­˜ç©å®¶æŠ€èƒ½
-        dataFile << player.getSkillList().size() << endl; //è·å¾—æŠ€èƒ½æ•°é‡
+        // ±£´æÍæ¼Ò¼¼ÄÜ
+        dataFile << player.getSkillList().size() << endl; //»ñµÃ¼¼ÄÜÊıÁ¿
         for(auto &i:player.getSkillList()){ dataFile << i.first << endl; }
-        // ä¿å­˜ç©å®¶ç‰©å“æ 
-        dataFile << player.getItemList().size() << endl; //è·å¾—ç‰©å“æ•°é‡
+        // ±£´æÍæ¼ÒÎïÆ·À¸
+        dataFile << player.getItemList().size() << endl; //»ñµÃÎïÆ·ÊıÁ¿
         for(auto &i:player.getItemList()) {dataFile << i.first << endl; }
         // todo
-        // ä¿å­˜ç©å®¶çš„ä½ç½®
-        dataFile << curSpace->getName() << endl;// æ­£å¤„äºçš„ä½ç½®
+        // ±£´æÍæ¼ÒµÄÎ»ÖÃ
+        dataFile << curSpace->getName() << endl;// Õı´¦ÓÚµÄÎ»ÖÃ
+        // ½âËøÁËÄÇĞ©¿Õ¼ä
         for(auto &i:player.getMap().getAcc())
             dataFile << i.first.getName() << " " << i.second << endl;
     }
-    // todo
-    void init(Player player){
-        // todo åˆå§‹åŒ–é€»è¾‘è¿˜éœ€è¦è¡¥å……
-        if (dataExist(player.getName())) {  // å¦‚æœæ•°æ®æ–‡ä»¶å­˜åœ¨
-            cout << "æ•°æ®å·²å­˜åœ¨ï¼Œæ˜¯å¦è¯»å–ï¼Ÿ" << endl;
-            Menu menu[2]{"æ˜¯", "å¦"};  // åˆ›å»ºèœå•
-            switch (switcher(menu, 2)) {  // æ˜¾ç¤ºèœå•å¹¶è·å–ç”¨æˆ·é€‰æ‹©
-                case 0:  // å¦‚æœé€‰æ‹©â€œæ˜¯â€ï¼Œåˆ™é€€å‡ºå‡½æ•°ï¼ŒåŠ è½½æ•°æ®
+
+    // todo ³õÊ¼»¯Âß¼­»¹ĞèÒª²¹³ä
+    void init(){
+        // todo
+        if (dataExist(player.getName())) {  // Èç¹ûÊı¾İÎÄ¼ş´æÔÚ
+            cout << "Êı¾İÒÑ´æÔÚ£¬ÊÇ·ñ¶ÁÈ¡£¿" << endl;
+            Menu isOrNo[2]{"ÊÇ", "·ñ"};  // ´´½¨²Ëµ¥
+            switch (switcher(isOrNo, 2)) {  // ÏÔÊ¾²Ëµ¥²¢»ñÈ¡ÓÃ»§Ñ¡Ôñ
+                case 0:  // Èç¹ûÑ¡Ôñ¡°ÊÇ¡±£¬ÔòÍË³öº¯Êı£¬¼ÓÔØÊı¾İ
                     return;
-                case 1:  // å¦‚æœé€‰æ‹©â€œå¦â€ï¼Œåˆ™ä¿å­˜å½“å‰æ•°æ®
-                    saveData(player);
+                case 1:  // Èç¹ûÑ¡Ôñ¡°·ñ¡±£¬Ôò±£´æµ±Ç°Êı¾İ
+                    saveData();
                     player.setLevel(1);
+                    curSpace = player.getMap().getLocation();
             }
-        } else {  // å¦‚æœæ•°æ®æ–‡ä»¶ä¸å­˜åœ¨
-            saveData(player);  // ä¿å­˜åˆå§‹æ•°æ®
+        } else {  // Èç¹ûÊı¾İÎÄ¼ş²»´æÔÚ
+            saveData();  // ±£´æ³õÊ¼Êı¾İ
             player.setLevel(1);
+            curSpace = player.getMap().getLocation();
         }
     }
 
-    void loadGame(Player &player);
-
-    // åŠ è½½ç©å®¶æ•°æ® todo
-    void loadData(Player &player) {
-        if (dataExist(player.getName())) {  // å¦‚æœæ•°æ®æ–‡ä»¶å­˜åœ¨
-            std::ifstream dataFile(player.getName() + ".dat");  // æ‰“å¼€æ–‡ä»¶
-            // åŠ è½½ç©å®¶çš„ä¸»è¦å±æ€§
+    // ¼ÓÔØÍæ¼ÒÊı¾İ todo
+    void loadData() {
+        string path = "../save/";
+        if (dataExist(player.getName())) {  // Èç¹ûÊı¾İÎÄ¼ş´æÔÚ
+            std::ifstream dataFile(path + player.getName() + ".dat");  // ´ò¿ªÎÄ¼ş
+            // ¼ÓÔØÍæ¼ÒµÄÖ÷ÒªÊôĞÔ
             int level, maxHp, curHp, maxMp, Mp, str, def, agi;
             dataFile >> level >> maxHp >> curHp;
             dataFile >> maxMp >> Mp;
             dataFile >> str >> def >> agi;
             player.setMainFeature(level, maxHp, curHp, maxMp, Mp, str, def, agi);
-            // åŠ è½½ç©å®¶æŠ€èƒ½
+            // ¼ÓÔØÍæ¼Ò¼¼ÄÜ
             int numOfSkill;
             dataFile >> numOfSkill;
             while(numOfSkill--){
-                // è¯»å–æŠ€èƒ½çš„é€»è¾‘ todo
+                // ¶ÁÈ¡¼¼ÄÜµÄÂß¼­ todo
             }
-            // åŠ è½½ç©å®¶ç‰©å“æ  todo
+            // ¼ÓÔØÍæ¼ÒÎïÆ·À¸ todo
             int numOfItem;
             dataFile >> numOfItem;
             while(numOfItem--){
-               // è¯»å–ç‰©å“çš„é€»è¾‘ todo
-               // todo æ‰“å¼€item.txt
+               // ¶ÁÈ¡ÎïÆ·µÄÂß¼­ todo
+               // todo ´ò¿ªitem.txt
 
-               // è¿›è¡Œæ¯”å¯¹å’Œè¯»å–æ•°æ®
-
-            }
-            // åŠ è½½ç©å®¶ä½ç½® todo
+               }
+            // ¼ÓÔØÍæ¼ÒÎ»ÖÃ todo
             string name;
             dataFile >> name;
             curSpace->setName(name);
-            // todo è¡¥å……è¯»å–åœ°å›¾çš„é€»è¾‘
+            // todo ²¹³ä¶ÁÈ¡µØÍ¼µÄÂß¼­
 
-        } else {  // å¦‚æœæ•°æ®æ–‡ä»¶ä¸å­˜åœ¨
+        } else {  // Èç¹ûÊı¾İÎÄ¼ş²»´æÔÚ
             system("cls");
-            cout << "æ•°æ®ä¸å­˜åœ¨ï¼Œåˆ›å»ºæ–°å­˜æ¡£" << endl;
-            saveData(player);  // ä¿å­˜åˆå§‹æ•°æ®
+            cout << "Êı¾İ²»´æÔÚ£¬´´½¨ĞÂ´æµµ" << endl;
+            saveData();  // ±£´æ³õÊ¼Êı¾İ
             system("pause");
         }
     }
 
-    // æ–°æ¸¸æˆ todo
+    // ĞÂÓÎÏ· todo
     void newGame() {
-        system("cls");  // æ¸…å±
-        init(player);  // åˆå§‹åŒ–ç©å®¶æ•°æ®
-        system("cls");  // å†æ¬¡æ¸…å±
-        loadGame(player);  // åŠ è½½æ¸¸æˆ
+        system("cls");  // ÇåÆÁ
+        init();  // ³õÊ¼»¯Íæ¼ÒÊı¾İ
+        system("cls");  // ÔÙ´ÎÇåÆÁ
+        loadGame();  // ¼ÓÔØÓÎÏ·
     }
 
-    // åŠ è½½æ¸¸æˆ
-    void loadGame(Player& player) {
+    // ¼ÓÔØÓÎÏ·
+    void loadGame() {
         // todo
-        loadData(player);  // åŠ è½½ç©å®¶æ•°æ®
-        Map::printMap();  // æ‰“å°åœ°å›¾
-        onMap(player);  // å¤„ç†åœ°å›¾ä¸Šçš„è¡Œä¸º
-        saveData(player);  // ä¿å­˜ç©å®¶æ•°æ®
-        goodbye();  // æ˜¾ç¤ºæ¸¸æˆç»“æŸé¡µé¢
-        system("pause");  // æš‚åœï¼Œç­‰å¾…ç”¨æˆ·æ“ä½œ
+        loadData();  // ¼ÓÔØÍæ¼ÒÊı¾İ
+        Map::printMap();  // ´òÓ¡µØÍ¼
+        //onMap(player);  // todo ´¦ÀíµØÍ¼ÉÏµÄĞĞÎª
+        runGame();
+        saveData();  // ±£´æÍæ¼ÒÊı¾İ
+        goodbye();  // ÏÔÊ¾ÓÎÏ·½áÊøÒ³Ãæ
+        system("pause");  // ÔİÍ££¬µÈ´ıÓÃ»§²Ù×÷
     }
 
-    // è¿è¡Œæ¸¸æˆ
+    // ÔËĞĞÓÎÏ·
     void runGame() {
         // todo
-        // æ¸¸æˆå¾ªç¯çš„ä»£ç 
+        // ÓÎÏ·Ñ­»·µÄ´úÂë
+        Menu motion[]{
+            "1.¹ÛÆø", //¹Û²ì¹ÖÊŞ×´Ì¬
+            "2.¹¥Ö®", //½ø¹¥¹ÖÊŞ
+            "3.ĞĞÖ®", //½øÈëÏÂÒ»¸öµØÍ¼
+            "4.ÑøÆø", //»Ø¸´ÆøµÄº¬Á¿
+            "5.ÎïÆ·"  //Ê¹ÓÃÎïÆ·
+        };
+        while(true){
+            player.printInfo();
+            switch (switcher(motion, 5)) {
+                case 0:
+                    // todo Êä³ö¹ÖÊŞ×´Ì¬
+                    break;
+                case 1:
+                    // todo ¹¥»÷Ñ¡¶¨µÄ¹ÖÊŞ,fightÂß¼­
+                    break;
+                case 2:
+                    // todo Êä³öÁ¬½ÓµÄµØ·½£¬²¢Ñ¡ÔñÈ¥ÄÄ
+                    break;
+                case 3:
+                    // todo »Ø¸´×ÔÉíÆø
+                    break;
+                case 4:
+                    // todo Ê¹ÓÃÎïÆ·µÄÂß¼­
+                    break;
+            }
+        }
     }
 
-    // å¤„ç†è¾“å…¥
+    // ´¦ÀíÊäÈë
     void handleInput() {
         // todo
-        // å¤„ç†ç”¨æˆ·è¾“å…¥çš„ä»£ç 
+        // ´¦ÀíÓÃ»§ÊäÈëµÄ´úÂë
     }
 
-    // ç§»åŠ¨
+    // ÒÆ¶¯
     void move() {
         // todo
-        // ç§»åŠ¨ç©å®¶çš„ä»£ç 
+        // ÒÆ¶¯Íæ¼ÒµÄ´úÂë
     }
 
-    // æ¡ç‰©å“
+    // ¼ñÎïÆ·
     void pickUp(string name){
         Item item = curSpace->pickUp(name);
-        // å¦‚æœitem = {}
-        if (!item.getName().empty()){ cout << "æ²¡æ¡èµ·æ¥ï¼Œå› ä¸ºè¯¥ç‰©å“ä¸å­˜åœ¨"; }
+        // Èç¹ûitem = {}
+        if (!item.getName().empty()){ cout << "Ã»¼ñÆğÀ´£¬ÒòÎª¸ÃÎïÆ·²»´æÔÚ"; }
         else{
-            cout << "æˆåŠŸæ¡èµ·äº†" << item.getName() << endl;
+            cout << "³É¹¦¼ñÆğÁË" << item.getName() << endl;
             player.addItem(item);
         }
     }
-    // æˆ˜æ–—
+    // Õ½¶·
     void fight() {
         // todo
-        // æˆ˜æ–—é€»è¾‘çš„ä»£ç 
+        // Õ½¶·Âß¼­µÄ´úÂë
     }
 
-    // ä¿å­˜æ¸¸æˆ
+    // ±£´æÓÎÏ·
     void saveGame() {
         // todo
-        // ä¿å­˜æ¸¸æˆçŠ¶æ€çš„ä»£ç 
+        // ±£´æÓÎÏ·×´Ì¬µÄ´úÂë
     }
 
-    // é€€å‡ºæ¸¸æˆ
-    void goodBye() {
-        // todo
-        std::cout << "Goodbye!" << std::endl;
+    // ÏÔÊ¾ÓÎÏ·½áÊøÒ³Ãæ
+    void goodbye() {
+        system("cls");  // Çå³ı¿ØÖÆÌ¨ÄÚÈİ
+        ifstream creditsLogoFile("../assets/.endLogo");  // ´ò¿ª½áÊøLogoÎÄ¼ş
+        string logo;
+        while (getline(creditsLogoFile, logo)) {  // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
+            cout << logo << endl;
+            Sleep(randInt(20, 50));  // ÑÓ³ÙÊä³ö
+        }
+        creditsLogoFile.close();
+        ifstream creditsFile("../assets/.endPage");  // ´ò¿ª½áÊøÏûÏ¢ÎÄ¼ş
+        string credits;
+        while (getline(creditsFile, credits)) {  // ÖğĞĞ¶ÁÈ¡ÎÄ¼ş
+            cout << credits << endl;
+            Sleep(randInt(20, 50));  // ÑÓ³ÙÊä³ö
+        }
+        creditsFile.close();
     }
-
 };
 #endif //ADVENTUREGAME_GAMECONTROLLER_H

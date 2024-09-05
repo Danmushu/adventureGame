@@ -142,7 +142,6 @@ void printMsg(string msgDir, bool singleLine = false, bool noCD = false) {
 
 // 显示游戏欢迎页面
 void welcomePage() {
-
     // 将窗口居中显示，并隐藏光标
     PosControl::centerWindow();  // 使用窗口管理函数将控制台窗口居中显示
     PosControl::HideCursor();  // 隐藏控制台光标，以提高用户体验
@@ -150,7 +149,6 @@ void welcomePage() {
     // 输出初始分割线，用于提示用户调整控制台字体大小
     cout << "==================================================================================================="
          << endl;
-
     // 提示用户如何调整字体大小
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // 设置文本颜色为白色
     cout << endl << "    请使用 ";  // 输出提示信息
@@ -163,14 +161,12 @@ void welcomePage() {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // 恢复文本颜色为白色
     cout << "调整控制台字体大小，确保以上分割线显示在同一行。"
          << endl;
-
     // 提示用户按下Enter键继续
     cout << endl << "按下 ";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);  // 设置文本颜色为红色
     cout << "[Enter键] ";  // 提示用户按下Enter键
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // 恢复文本颜色为白色
     cout << "继续..." << endl;
-
     // 等待用户按下Enter键以继续
     while (true) {  // 无限循环，直到用户按下Enter键
         if (kbhit()) {  // 检测是否有按键按下
@@ -190,10 +186,8 @@ void welcomePage() {
             }
         }
     }
-
     // 输出欢迎页面的文本内容，从文件 "../assets/scene/startPage.txt" 中读取并显示
     printMsg("../assets/scene/startPage.txt");  // 调用函数输出开始页面的消息，允许用户通过Tab键跳过
-
     // 显示加载进度条
     cout << endl << endl;
     for (int i = 0; i < 104; i++) {  // 输出进度条的长度为103个字符

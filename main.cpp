@@ -69,7 +69,7 @@ int main()
         case 0:
             // 如果玩家选择了“新游戏”，则启动新游戏
             cout << 0;
-//            newGame(player);
+            game.newGame();
             break;
         case 1:
             // 如果玩家选择了“加载游戏”，则加载游戏数据

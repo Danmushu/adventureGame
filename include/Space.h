@@ -21,12 +21,12 @@ class Player;
  */
 class Space {
 private:
-    std::string name;                               ///< 空间的名称
-    std::string description;                        ///< 空间的描述
-    std::unordered_map<string, Item> items;         ///< 空间中包含的物品列表
-    std::vector<Monster> monsters;                  ///< 空间中包含的怪物列表
+    string name;                               ///< 空间的名称
+    string description;                        ///< 空间的描述
+    unordered_map<string, Item> items;         ///< 空间中包含的物品列表
+    vector<Monster> monsters;                  ///< 空间中包含的怪物列表
     bool accessibility;                             ///< 是否可以通过此空间
-    std::unordered_map<Space*, std::vector<Item>> towards; ///< 通往其他空间的条件物品
+    unordered_map<Space*, std::vector<Item>> towards; ///< 通往其他空间的条件物品
     //fight
 public:
     // 构造函数
@@ -55,11 +55,9 @@ public:
     // 设置空间名字
     void setName(string name) { this->name = name; }
     // 获取空间中的物品列表
-     unordered_map<string, Item> getItems() const { return items; }
+    unordered_map<string, Item> getItems() const { return items; }
     // 重载==运算符
-    bool operator==(const Space& other) const {
-        return name == other.name;
-    }
+    bool operator==(const Space& other) const { return name == other.name; }
     // 友元声明，以便std::hash可以访问私有成员
     friend struct std::hash<Space>;
     // 检查是否可以通过此空间

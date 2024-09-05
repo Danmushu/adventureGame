@@ -9,15 +9,17 @@
 #include "Player.h"
 #include "Monster.h"
 
+class Player;
+
 // 战斗系统类
 class Battle {
 private:
-    Player player;
+    Player& player;
     Monster monster;
     bool isGameOver;
 
 public:
-    Battle() : isGameOver(false) {}
+    Battle(Player &player) : player(player), isGameOver(false) {}
 
     void startBattle() {
         std::cout << "Battle starts!" << std::endl;

@@ -13,43 +13,43 @@
 
 class Player : public Creature {
 private:
-    int requiredMp;//å½“å‰å¢ƒç•Œæœ€å¤§æ°”é‡ï¼Œä¹Ÿæ˜¯ç­‰çº§çš„è¾¹ç•Œçº¿
-    int mp;//æ°”
+    int requiredMp;//µ±Ç°¾³½ç×î´óÆøÁ¿£¬Ò²ÊÇµÈ¼¶µÄ±ß½çÏß
+    int mp;//Æø
     Map map;
 
 public:
-    // é»˜è®¤æ„é€ å‡½æ•°
+    // Ä¬ÈÏ¹¹Ôìº¯Êı
     Player() : Creature(), requiredMp(100), mp(100), map() {}
-    // å¸¦å‚æ•°çš„æ„é€ å‡½æ•°
+    // ´ø²ÎÊıµÄ¹¹Ôìº¯Êı
     Player(std::string name) : Creature(name), requiredMp(100), mp(100), map() {}
-    // ææ„å‡½æ•°
+    // Îö¹¹º¯Êı
     ~Player() override = default;
-    // è·å–åœ°å›¾
+    // »ñÈ¡µØÍ¼
     Map getMap() const { return map; }
-    // è·å–æœ€åä½ç½®ï¼ˆè¿™é‡Œå¯èƒ½æ˜¯ä¸€ä¸ªé”™è¯¯ï¼Œé€šå¸¸ä¸ä¼šå’ŒgetMap()è¿”å›ç›¸åŒçš„å€¼ï¼‰
+    // »ñÈ¡×îºóÎ»ÖÃ£¨ÕâÀï¿ÉÄÜÊÇÒ»¸ö´íÎó£¬Í¨³£²»»áºÍgetMap()·µ»ØÏàÍ¬µÄÖµ£©
     Map getLastPos() const { return map; }
-    // è·å–å½“å‰ä½ç½®çš„å¼•ç”¨
+    // »ñÈ¡µ±Ç°Î»ÖÃµÄÒıÓÃ
     Map& getPos() { return map; }
-    // è·å–æ°”å€¼
+    // »ñÈ¡ÆøÖµ
     int getMp() const { return mp; }
-    // è·å–æå‡å¢ƒç•Œæ‰€éœ€è¦çš„æ°”é‡
+    // »ñÈ¡ÌáÉı¾³½çËùĞèÒªµÄÆøÁ¿
     int getRequiredMp() const { return requiredMp; }
-    // æ‰“å°æŠ€èƒ½åˆ—è¡¨
+    // ´òÓ¡¼¼ÄÜÁĞ±í
     void printSkillList() const {
-        // è¾“å‡ºç©å®¶æŠ€èƒ½åˆ—è¡¨
+        // Êä³öÍæ¼Ò¼¼ÄÜÁĞ±í
         int id = 1;
-        // ç©å®¶åˆ—è¡¨è‡³å°‘æœ‰ä¸€ä¸ªæŠ€èƒ½
+        // Íæ¼ÒÁĞ±íÖÁÉÙÓĞÒ»¸ö¼¼ÄÜ
         for(auto &i:skills){
             cout << id << i.first <<": " << i.second.getDes() << endl;
             id++;
         }
     }
-    // æ‰“å°ç‰©å“åˆ—è¡¨
+    // ´òÓ¡ÎïÆ·ÁĞ±í
     void printItemList() const {
-        // è¾“å‡ºç©å®¶ç‰©å“åˆ—è¡¨
+        // Êä³öÍæ¼ÒÎïÆ·ÁĞ±í
         // may be empty
         if(inventory.empty()){
-            cout << "åªæœ‰ä¸€ä¸ªç©ºç©ºå¦‚ä¹Ÿçš„èƒŒåŒ…" <<  endl;
+            cout << "Ö»ÓĞÒ»¸ö¿Õ¿ÕÈçÒ²µÄ±³°ü" <<  endl;
             return;
         }
         int id = 0;
@@ -59,21 +59,21 @@ public:
         }
 
     }
-    // æ‰“å°ç©å®¶ä¿¡æ¯
+    // ´òÓ¡Íæ¼ÒĞÅÏ¢
     void printInfo() const {
-        // è¾“å‡ºç©å®¶ä¿¡æ¯
-        cout << "[å¢ƒ]" << level << endl;
-        cout << "[è¡€]   " << curHP << "/" << maxHP << endl;
-        cout << "[æ°”]   " << mp << endl;
-        cout << "[åŠ›]" << strength <<  "\t";
-        cout << "[å¾¡] " << defense << "\t";
-        cout << "[æ•] " << agility << "\t";
+        // Êä³öÍæ¼ÒĞÅÏ¢
+        cout << "[¾³]" << level << endl;
+        cout << "[Ñª]   " << curHP << "/" << maxHP << endl;
+        cout << "[Æø]   " << mp << endl;
+        cout << "[Á¦]" << strength <<  "\t";
+        cout << "[Óù] " << defense << "\t";
+        cout << "[Ãô] " << agility << "\t";
         printSkillList();
         printItemList();
     }
-    // è®¾ç½®æ°”
+    // ÉèÖÃÆø
     void setMp(int mp) { this->mp = mp; }
-    // è®¾ç½®ä¸»è¦å±æ€§
+    // ÉèÖÃÖ÷ÒªÊôĞÔ
     void setMainFeature(int level, int maxHp, int curHp, int maxMp, int Mp, int str, int def, int agi)
     {
         setLevel(level);
@@ -84,38 +84,38 @@ public:
         setDef(def);
         setAgi(agi);
     }
-    //è®¾ç½®æ°”ä¸Šé™é‡
+    //ÉèÖÃÆøÉÏÏŞÁ¿
     void setRequiredMp(int maxMp){ this->requiredMp = maxMp; }
-    // ä½¿ç”¨ç‰©å“
+    // Ê¹ÓÃÎïÆ·
     void useItem(std::string name) {
-        // ä½¿ç”¨ç‰©å“é€»è¾‘
-        // ç”¨è¿­ä»£å™¨æŸ¥æ‰¾
+        // Ê¹ÓÃÎïÆ·Âß¼­
+        // ÓÃµü´úÆ÷²éÕÒ
         auto it = inventory.find(name);
         if (it == inventory.end()) {
-            cout << "åŒ…é‡Œæ²¡æœ‰è¿™ä¸ªç‰©å“ï¼" << endl;
+            cout << "°üÀïÃ»ÓĞÕâ¸öÎïÆ·£¡" << endl;
         }else{
             agility += it->second.getAgi();
             strength += it->second.getAtk();
             defense += it->second.getDef();
             mp += it->second.getMp();
-            // å›å¤ä¸èƒ½è¶…è¿‡æœ€å¤§ç”Ÿå‘½å€¼
+            // »Ø¸´²»ÄÜ³¬¹ı×î´óÉúÃüÖµ
             if(curHP+it->second.getRec()<= maxHP) curHP += it->second.getRec();
             else curHP = maxHP;
         }
-        // ç”¨å®Œä¸¢å¼ƒ
+        // ÓÃÍê¶ªÆú
         inventory.erase(it->first);
     }
-    // ä¸¢å¼ƒç‰©å“
+    // ¶ªÆúÎïÆ·
     void dropItem(std::string name) {
-        // ä¸¢å¼ƒç‰©å“é€»è¾‘
+        // ¶ªÆúÎïÆ·Âß¼­
         // find the item
         auto it = inventory.find(name);
         if (it != inventory.end()) inventory.erase(it->first);
-        else cout << "åŒ…é‡Œæ²¡æœ‰è¿™ä¸ªç‰©å“! " << endl;
+        else cout << "°üÀïÃ»ÓĞÕâ¸öÎïÆ·! " << endl;
     }
-    // å›å¤æ°”
+    // »Ø¸´Æø
     void recovery(){
-        cout << "å›å¤ä¸­:";
+        cout << "»Ø¸´ÖĞ:";
         int t = 3;
         mp = requiredMp;
         for (int i = 0; i < t; ++i) {
@@ -124,15 +124,15 @@ public:
             cout<<" \b \b \b";
         }
         system("cls");
-        cout << "ç²¾ç¥ç„•å‘ï¼" << endl;
+        cout << "¾«Éñ»À·¢£¡" << endl;
     }
-    // ä½¿ç”¨æŠ€èƒ½->åº”è¯¥è¦å†™åœ¨fightä¸­
+    // Ê¹ÓÃ¼¼ÄÜ->Ó¦¸ÃÒªĞ´ÔÚfightÖĞ
     // todo
     void useSkill(string name) {
         auto it = skills.find(name);
         if (it != skills.end()){
             Skill skill = it->second;
-            if (skill.getMp() + mp < 0){ cout << "æ°”ä¸è¶³ï¼Œæ— æ³•é‡Šæ”¾è¯¥æœ¯" <<endl;}
+            if (skill.getMp() + mp < 0){ cout << "Æø²»×ã£¬ÎŞ·¨ÊÍ·Å¸ÃÊõ" <<endl;}
             else{
                 mp -= skill.getMp();
                 //

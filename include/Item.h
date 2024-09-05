@@ -14,8 +14,8 @@
  */
 class Item {
 protected:
-    std::string name;          ///< 物品名称
-    std::string description;   ///< 物品描述 < 描述属性加成
+    string name;          ///< 物品名称
+    string description;   ///< 物品描述 < 描述属性加成
     int attack;                ///< 攻击力加成
     int defense;               ///< 防御力加成
     int agility;               ///< 敏捷度加成
@@ -27,12 +27,12 @@ protected:
 public:
     // 构造函数
     Item() : name(""),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
-    Item(std::string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
+    Item(string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
 
     // 虚析构函数
-    virtual ~Item() {}
+    virtual ~Item() = default;
     // 获取物品名称
-    std::string getName() const { return name; }
+    string getName() const { return name; }
     // 获取攻击力加成
     int getAtk() const { return attack; }
     // 获取防御力加成

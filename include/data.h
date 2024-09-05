@@ -7,5 +7,6 @@
 // todo
 namespace DataControl{
 
+        // todo 文件中读取数据到类
 }
 #endif //ADVENTUREGAME_DATA_H
