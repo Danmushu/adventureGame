@@ -8,9 +8,6 @@
 #include "Player.h"
 #include "Space.h"
 #include "interface.h"
-#include "data.h"
-
-using namespace DataControl;
 
 /**
  * @class GameController
@@ -19,194 +16,162 @@ using namespace DataControl;
 class GameController {
 private:
     Player& player;
-    shared_ptr<Space> curSpace;
+    Space* currentSpace;
 
 public:
     // 构造函数
-    GameController(Player& player) : player(player), curSpace(nullptr) {
-        // todo
+    GameController(Player& player) : player(player), currentSpace(nullptr) {
         // 初始化代码
     }
 
     // 析构函数
     ~GameController() {
         // 清理代码
-        delete curSpace;
+        delete currentSpace;
     }
 
-//    // 开始页面 todo
-//    void openningPage() {
-//        // todo
-//        // 读取游戏开始数据
-//        ifstream dataFile("../assets/scene/startPage.txt");
-//        string startPage;
-//        int spaceLength = std::max((PosControl::size.width / 10 - 88) / 2 + 2, 0);
-//        string space(spaceLength, ' ');;
-//        while (getline(dataFile, startPage)) {
-//            int color = randInt(1, 15);
-//            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-//            Sleep(50);
-//            cout << space << startPage << endl;
-//        }
-//        dataFile.close();
-//
-//    }
+    // 开始页面
+    void openningPage() {
+        // 读取游戏开始数据
+        ifstream dataFile("../assets/scene/startPage.txt");
+        string startPage;
+        int spaceLength = std::max((PosControl::size.width / 10 - 88) / 2 + 2, 0);
+        string space(spaceLength, ' ');
 
-    // 检查指定名称的数据文件是否存在
-    bool dataExist(const string &name) {
-        string fileName = name + ".dat";  // 构造数据文件的名称
-        std::ifstream dataFile(fileName);  // 尝试打开文件
-        bool isOpen = dataFile.is_open();  // 检查文件是否成功打开
-        dataFile.close();  // 关闭文件
-        return isOpen;  // 返回文件是否存在
-    }
-
-    // 保存玩家数据到文件 todo
-    void saveData(Player &player) {
-        // 创建数据文件，如果文件已存在则覆盖
-        std::ofstream dataFile(player.getName() + ".dat", std::ios::trunc);
-        // 保存玩家的主要属性
-        dataFile << player.getLevel() << endl;
-        dataFile << player.getMaxHp() << " " << player.getCurHp() << endl;
-        dataFile << player.getRequiredMp() << " " << player.getMp() << endl;
-        dataFile << player.getStr() << " " << player.getDef() << " " << player.getAgi() << endl;
-        // 保存玩家技能
-        dataFile << player.getSkillList().size() << endl; //获得技能数量
-        for(auto &i:player.getSkillList()){ dataFile << i.first << endl; }
-        // 保存玩家物品栏
-        dataFile << player.getItemList().size() << endl; //获得物品数量
-        for(auto &i:player.getItemList()) {dataFile << i.first << endl; }
-        // todo
-        // 保存玩家的位置
-        dataFile << curSpace->getName() << endl;// 正处于的位置
-        for(auto &i:player.getMap().getAcc())
-            dataFile << i.first.getName() << " " << i.second << endl;
-    }
-    // todo
-    void init(Player player){
-        // todo 初始化逻辑还需要补充
-        if (dataExist(player.getName())) {  // 如果数据文件存在
-            cout << "数据已存在，是否读取？" << endl;
-            Menu menu[2]{"是", "否"};  // 创建菜单
-            switch (switcher(menu, 2)) {  // 显示菜单并获取用户选择
-                case 0:  // 如果选择“是”，则退出函数，加载数据
-                    return;
-                case 1:  // 如果选择“否”，则保存当前数据
-                    saveData(player);
-                    player.setLevel(1);
-            }
-        } else {  // 如果数据文件不存在
-            saveData(player);  // 保存初始数据
-            player.setLevel(1);
+        while (getline(dataFile, startPage)) {
+            int color = randInt(1, 15);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+            Sleep(50);
+            cout << space << startPage << endl;
         }
+        dataFile.close();
     }
 
-    void loadGame(Player &player);
-
-    // 加载玩家数据 todo
-    void loadData(Player &player) {
-        if (dataExist(player.getName())) {  // 如果数据文件存在
-            std::ifstream dataFile(player.getName() + ".dat");  // 打开文件
-            // 加载玩家的主要属性
-            int level, maxHp, curHp, maxMp, Mp, str, def, agi;
-            dataFile >> level >> maxHp >> curHp;
-            dataFile >> maxMp >> Mp;
-            dataFile >> str >> def >> agi;
-            player.setMainFeature(level, maxHp, curHp, maxMp, Mp, str, def, agi);
-            // 加载玩家技能
-            int numOfSkill;
-            dataFile >> numOfSkill;
-            while(numOfSkill--){
-                // 读取技能的逻辑 todo
-            }
-            // 加载玩家物品栏 todo
-            int numOfItem;
-            dataFile >> numOfItem;
-            while(numOfItem--){
-               // 读取物品的逻辑 todo
-               // todo 打开item.txt
-
-               // 进行比对和读取数据
-
-            }
-            // 加载玩家位置 todo
-            string name;
-            dataFile >> name;
-            curSpace->setName(name);
-            // todo 补充读取地图的逻辑
-
-        } else {  // 如果数据文件不存在
-            system("cls");
-            cout << "数据不存在，创建新存档" << endl;
-            saveData(player);  // 保存初始数据
-            system("pause");
-        }
-    }
-
-    // 新游戏 todo
+    // 新游戏
     void newGame() {
-        system("cls");  // 清屏
-        init(player);  // 初始化玩家数据
-        system("cls");  // 再次清屏
-        loadGame(player);  // 加载游戏
+        // 重置玩家状态
+        player.reset();
+
+        // 设置初始空间
+        currentSpace = new Space("秘境入口");
+        // 初始化其他必要资源
+        // 设置初始进度
+        player.setProgress(0);
+
+        // 显示欢迎信息
+        cout << "Welcome to the Adventure Game!" << endl;
+        cout << "Starting a new game..." << endl;
+        runGame();
     }
 
     // 加载游戏
-    void loadGame(Player& player) {
-        // todo
-        loadData(player);  // 加载玩家数据
-        Map::printMap();  // 打印地图
-        onMap(player);  // 处理地图上的行为
-        saveData(player);  // 保存玩家数据
-        goodbye();  // 显示游戏结束页面
-        system("pause");  // 暂停，等待用户操作
+    void loadGame() {
+        // 加载游戏的代码
     }
+    bool main_showGameOverMenu(GameController& game) {
+        std::cout << "Game Over!" << std::endl;
+        std::cout << "Choose an option:" << std::endl;
+        std::cout << "0. Restart Game" << std::endl;
+        std::cout << "1. Exit Game" << std::endl;
 
+        int choice;
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            // 处理非法输入
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a number." << std::endl;
+            return false; // 默认退出游戏
+        } else {
+            switch (switcher(gameOverMenu, 2)) {
+                case 0:
+                    // 如果玩家选择了“新游戏”，则启动新游戏
+                        game.newGame();
+                        game.runGame();
+                return true;
+                break;
+                case 1:
+                    // 如果玩家选择了“退出游戏”，则显示退出页面，并退出程序
+                        goodbye();
+                        system("pause");  // 暂停等待用户按键
+                return false;
+                default: ;
+            }
+        }
+    }
     // 运行游戏
     void runGame() {
-        // todo
-        // 游戏循环的代码
+
+        // 游戏主循环
+        bool isRunning = true;
+
+        while (isRunning) {
+            // 显示当前空间信息
+            currentSpace->describe();
+
+            // 显示玩家可选的操作
+            std::cout << "Choose an action:" << std::endl;
+            std::cout << "1. Move to another space" << std::endl;
+            std::cout << "2. Exit game" << std::endl;
+
+            int choice;
+            std::cin >> choice;
+
+            switch (choice) {
+                case 1:
+                    // 移动到另一个空间
+                    move();
+                    break;
+                case 2:
+                    // 退出游戏
+                    isRunning = false;
+                    break;
+                default:
+                    std::cout << "Invalid choice. Please try again." << std::endl;
+
+                    break;
+            }
+
+            // 检查玩家是否失败
+            if (player.isDead()) {
+                // 显示游戏结束菜单
+                if (main_showGameOverMenu(*this)) {
+                    // 重新开始游戏
+                    newGame();
+                } else {
+                    // 退出游戏
+                    isRunning = false;
+                }
+            }
+        }
     }
 
     // 处理输入
     void handleInput() {
-        // todo
         // 处理用户输入的代码
     }
 
     // 移动
     void move() {
-        // todo
         // 移动玩家的代码
     }
 
-    // 捡物品
-    void pickUp(string name){
-        Item item = curSpace->pickUp(name);
-        // 如果item = {}
-        if (!item.getName().empty()){ cout << "没捡起来，因为该物品不存在"; }
-        else{
-            cout << "成功捡起了" << item.getName() << endl;
-            player.addItem(item);
-        }
-    }
     // 战斗
     void fight() {
-        // todo
-        // 战斗逻辑的代码
+
     }
 
     // 保存游戏
     void saveGame() {
-        // todo
         // 保存游戏状态的代码
     }
 
     // 退出游戏
-    void goodBye() {
-        // todo
+    static void goodBye() {
         std::cout << "Goodbye!" << std::endl;
     }
+
 
 };
 #endif //ADVENTUREGAME_GAMECONTROLLER_H

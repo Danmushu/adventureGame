@@ -32,8 +32,6 @@ public:
     Map& getPos() { return map; }
     // 获取气值
     int getMp() const { return mp; }
-    // 获取提升境界所需要的气量
-    int getRequiredMp() const { return requiredMp; }
     // 打印技能列表
     void printSkillList() const {
         // 输出玩家技能列表
@@ -43,6 +41,18 @@ public:
             cout << id << i.first <<": " << i.second.getDes() << endl;
             id++;
         }
+    }
+    // 攻击怪物
+    void attack(Creature& target) {
+        // 简化处理：每次攻击减少固定的生命值
+        int damage = getStr();  // 假设力量值作为攻击力
+        target.setCurHp(target.getCurHp() - damage);
+        std::cout << "Player attacks the monster for " << damage << " damage." << std::endl;
+    }
+
+    // 判断玩家是否死亡
+    bool isDead() const {
+        return getCurHp() <= 0;
     }
     // 打印物品列表
     void printItemList() const {
@@ -73,19 +83,6 @@ public:
     }
     // 设置气
     void setMp(int mp) { this->mp = mp; }
-    // 设置主要属性
-    void setMainFeature(int level, int maxHp, int curHp, int maxMp, int Mp, int str, int def, int agi)
-    {
-        setLevel(level);
-        setMaxHp(maxHp);
-        setCurHp(curHp);
-        setRequiredMp(maxMp);
-        setStr(str);
-        setDef(def);
-        setAgi(agi);
-    }
-    //设置气上限量
-    void setRequiredMp(int maxMp){ this->requiredMp = maxMp; }
     // 使用物品
     void useItem(std::string name) {
         // 使用物品逻辑
@@ -138,6 +135,34 @@ public:
                 //
             }
         }
+    }
+    void reset() {
+        // 重置基本属性
+        level = 1;  // 假设初始等级为 1
+        curHP = maxHP = 100;  // 假设初始血量为 100
+        strength = 10;  // 假设初始力量为 10
+        defense = 10;  // 假设初始防御为 10
+        agility = 10;  // 假设初始敏捷为 10
+
+        // 重置气值
+        mp = requiredMp = 100;  // 假设初始气值为 100
+
+        // 清空技能列表
+        skills.clear();
+
+        // 清空物品列表
+        inventory.clear();
+
+        // 重置地图位置
+        map.reset();
+    }
+    // 重置基本属性
+    void resetStats() override {
+        curHP = maxHP;  // 重置当前生命值
+        mp = requiredMp;  // 重置气值
+    }
+    void setProgress(int progress) {
+        map.setProgress(progress);  // 调用 Map 类的 setProgress 方法
     }
 };
 

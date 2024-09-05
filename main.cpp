@@ -12,7 +12,7 @@ int main()
 {
 
     //game.openningPage();
-    welcomePage();
+    //welcomePage();
     int x, y; //用于存储光标位置
     string name; //玩家姓名
     //获取光标位置
@@ -46,8 +46,9 @@ int main()
 
     // 使用玩家输入的名字创建一个 Player 对象
     Player player(name);
-    //开始界面函数
+    // 开始界面函数
     GameController game(player);
+
     // 向玩家打招呼并显示其名字
     cout << "    你好，名为 ";
     // 将文字颜色设置为黄色
@@ -68,21 +69,20 @@ int main()
     switch (switcher(menu, 3)) {
         case 0:
             // 如果玩家选择了“新游戏”，则启动新游戏
-            cout << 0;
-//            newGame(player);
-            break;
+                game.newGame();
+        break;
         case 1:
             // 如果玩家选择了“加载游戏”，则加载游戏数据
-            cout << 1;
-//            loadGame(player);
-            break;
+                game.loadGame();
+        break;
         case 2:
             // 如果玩家选择了“退出游戏”，则显示退出页面，并退出程序
-            cout << 2;
-            goodbye();
-            system("pause");  // 暂停等待用户按键
-            return 0;  // 退出程序
+                goodbye();
+                system("pause");  // 暂停等待用户按键
+        return 0;  // 退出程序
+        default: ;
     }
+
 
 
     return 0;

@@ -51,8 +51,6 @@ public:
         }
         return {};  // 返回一个默认技能对象
     }
-    // 返回技能列表
-    unordered_map<string, Skill> getSkillList() { return skills; }
     // 根据技能名称获取该技能的伤害值
     int getSkillDamage(std::string skillName) const {
         if (skills.find(skillName) != skills.end()) {
@@ -67,8 +65,6 @@ public:
         }
         return {""};  // 返回一个默认物品对象
     }
-    // 返回物品列表
-    unordered_map<string, Item> getItemList() { return inventory; }
     // 设置生物体的名称
     void setName(std::string name) { this->name = name; }
     // 设置生物体的力量属性值
@@ -87,6 +83,10 @@ public:
     void addSkill(std::string skillName, Skill skill) { skills[skillName] = skill; }
     // 为生物体添加一个物品
     void addItem(Item item) { inventory[item.getName()] = item; }
+    // 虚函数：重置生物的基本属性
+    virtual void resetStats() {
+        setCurHp(getMaxHp());
+    }
 };
 
 

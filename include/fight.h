@@ -1,61 +1,70 @@
 //
-// Created by Danmu on 2024/9/1.
+// Created by Danmu on 2024/8/29.
 //
 
 #ifndef ADVENTUREGAME_FIGHT_H
 #define ADVENTUREGAME_FIGHT_H
 
-#include <iostream>
+#include "Creature.h"
 #include "Player.h"
 #include "Monster.h"
 
-// 战斗系统类
-class Battle {
+/**
+ * @brief Fight 类表示游戏中的战斗逻辑。
+ */
+class Fight {
 private:
-    Player player;
-    Monster monster;
-    bool isGameOver;
+    Player player;         ///< 玩家对象
+    Monster monster;       ///< 怪物对象
+    bool isGameOver;       ///< 游戏是否结束
 
 public:
-    Battle() : isGameOver(false) {}
+    Fight(Player& player, Monster& monster) : player(player), monster(monster), isGameOver(false) {}
 
+    // 开始战斗
     void startBattle() {
         std::cout << "Battle starts!" << std::endl;
         // 初始化战斗，例如设置生命值等
+        player.resetStats();
+        monster.resetStats();
     }
 
+    // 处理战斗回合
     void handleTurn() {
-        // todo
-        if (isBattleOver()) {
-            std::cout << "Battle is over." << std::endl;
-            return;
+        while (!isBattleOver()) {
+            handlePlayerTurn();
+            if (!isBattleOver()) {
+                handleMonsterTurn();
+            }
         }
-
-        // 决定是玩家还是怪物的回合
-        // 这里简化处理，交替进行
-        handlePlayerTurn();
-        handleMonsterTurn();
+        if (monster.isDead()) {
+            std::cout << "You defeated the monster! Continue playing." << std::endl;
+        } else if (player.isDead()) {
+            std::cout << "You were defeated by the monster. Game over." << std::endl;
+        }
     }
 
+    // 处理玩家回合
     void handlePlayerTurn() {
-        // todo
-//        std::cout << "Player's turn." << std::endl;
-//        player.attack();
-//        // 可以添加更多的玩家行动选项
+        std::cout << "Player's turn." << std::endl;
+        player.attack(monster);
+        // 可以添加更多的玩家行动选项
     }
 
+    // 处理怪物回合
     void handleMonsterTurn() {
-        // todo
-//        std::cout << "Monster's turn." << std::endl;
-//        monster.attack();
-//        // 可以添加更多的怪物行动选项
+        std::cout << "Monster's turn." << std::endl;
+        monster.attack(player);
+        // 可以添加更多的怪物行动选项
     }
 
+    // 判断战斗是否结束
     bool isBattleOver() {
-        // todo
-        // 检查战斗是否结束的条件，例如玩家或怪物的生命值
-        // 这里简化为返回一个固定值
-        return isGameOver;
+        if (player.isDead() || monster.isDead()) {
+            isGameOver = true;
+            return true;
+        }
+        return false;
     }
 };
 
