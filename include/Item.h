@@ -28,7 +28,8 @@ public:
     // 构造函数
     Item() : name(""),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
     Item(string name) : name(name),  attack(0), defense(0), agility(0), recovery(0), damage(0), mp(0) {}
-
+    Item(string name, int atk, int def, int agi, int rec, int dmg, int mp):
+    name(name), attack(atk), defense(def), agility(agi), recovery(rec), damage(dmg), mp(mp) {}
     // 虚析构函数
     virtual ~Item() = default;
     // 获取物品名称
@@ -88,10 +89,10 @@ public:
     void setType(int type) { this->type = type; }
 };
 
-typedef Template Skill; ///< 技能类型 1.攻击法术 2.防御法术 3.治疗法术 4.遁走法术
-typedef Template Weapon; ///< 武器类型 1.剑 2.刀 3.甲 4.靴
-typedef Template Medicine; ///< 药物类型 1.狂暴 2.恢复 3.升级
-typedef Template Special; ///< 特殊 通关密钥
+typedef Item Skill; ///< 技能类型 1.攻击法术 2.防御法术 3.治疗法术 4.遁走法术
+typedef Item Weapon; ///< 武器类型 1.剑 2.刀 3.甲 4.靴
+typedef Item Medicine; ///< 药物类型 1.狂暴 2.恢复 3.升级
+typedef Item Special; ///< 特殊 通关密钥
 
 
 #endif //ADVENTUREGAME_ITEM_H

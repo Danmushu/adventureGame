@@ -19,7 +19,10 @@ private:
 
 public:
     // 默认构造函数
-    Player() : Creature(), requiredMp(100), mp(100), map() {}
+    Player() : Creature(), requiredMp(100), mp(100), map() {
+        Skill fire("火球术", 0, 0, 0, 0, 10, 5);
+        addSkill("火球术", fire);
+    }
     // 带参数的构造函数
     Player(std::string name) : Creature(name), requiredMp(100), mp(100), map() {}
     // 析构函数
