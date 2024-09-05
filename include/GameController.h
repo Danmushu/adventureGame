@@ -152,6 +152,7 @@ public:
     void runGame() {
         // todo
         // 游戏循环的代码
+        curSpace->describe();
         Menu motion[]{
             "1.观气", //观察怪兽状态
             "2.攻之", //进攻怪兽
@@ -164,15 +165,19 @@ public:
             switch (switcher(motion, 5)) {
                 case 0:
                     // todo 输出怪兽状态
+                    curSpace->showMonster();
                     break;
                 case 1:
                     // todo 攻击选定的怪兽,fight逻辑
+                    fight();
                     break;
                 case 2:
                     // todo 输出连接的地方，并选择去哪
+                    move();
                     break;
                 case 3:
                     // todo 回复自身气
+                    player.recovery();
                     break;
                 case 4:
                     // todo 使用物品的逻辑
@@ -232,6 +237,87 @@ public:
             Sleep(randInt(20, 50));  // 延迟输出
         }
         creditsFile.close();
+    }
+
+    // todo 将其和switcher结合
+    bool main_showGameOverMenu(GameController& game) {
+        std::cout << "Game Over!" << std::endl;
+        std::cout << "Choose an option:" << std::endl;
+        std::cout << "0. Restart Game" << std::endl;
+        std::cout << "1. Exit Game" << std::endl;
+
+        int choice;
+        std::cin >> choice;
+
+        if (std::cin.fail()) {
+            // 处理非法输入
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a number." << std::endl;
+            return false; // 默认退出游戏
+        } else {
+            switch (switcher(gameOverMenu, 2)) {
+                case 0:
+                    // 如果玩家选择了“新游戏”，则启动新游戏
+                    game.newGame();
+                    game.runGame();
+                    return true;
+                    break;
+                case 1:
+                    // 如果玩家选择了“退出游戏”，则显示退出页面，并退出程序
+                    goodbye();
+                    system("pause");  // 暂停等待用户按键
+                    return false;
+                default:;
+            }
+        }
+    }
+
+    // todo 运行游戏 如何合并
+    void runGame() {
+
+        // 游戏主循环
+        bool isRunning = true;
+
+        while (isRunning) {
+            // 显示当前空间信息
+            currentSpace->describe();
+
+            // 显示玩家可选的操作
+            std::cout << "Choose an action:" << std::endl;
+            std::cout << "1. Move to another space" << std::endl;
+            std::cout << "2. Exit game" << std::endl;
+
+            int choice;
+            std::cin >> choice;
+
+            switch (choice) {
+                case 1:
+                    // 移动到另一个空间
+                    move();
+                    break;
+                case 2:
+                    // 退出游戏
+                    isRunning = false;
+                    break;
+                default:
+                    std::cout << "Invalid choice. Please try again." << std::endl;
+
+                    break;
+            }
+
+            // 检查玩家是否失败
+            if (player.isDead()) {
+                // 显示游戏结束菜单
+                if (main_showGameOverMenu(*this)) {
+                    // 重新开始游戏
+                    newGame();
+                } else {
+                    // 退出游戏
+                    isRunning = false;
+                }
+            }
+        }
     }
 };
 #endif //ADVENTUREGAME_GAMECONTROLLER_H

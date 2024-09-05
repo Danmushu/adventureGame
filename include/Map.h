@@ -58,6 +58,7 @@ public:
             else accessibility[i.first] = false;
         }
         curSpace.reset(&entrance);
+        curProgress = 0;
     }
 
     unordered_map<Space, bool> getAcc(){ return accessibility; }
@@ -129,6 +130,31 @@ public:
     void showMap(std::ostream& os) {
         // todo
     }
+    void setPosition(Space* space) {
+        // 设置当前空间
+        curSpace.reset(space);
+    }
+    void reset() {
+        // 重置当前空间
+        static Space entrance("秘境入口");
+        setPosition(&entrance);
+
+        // 重置当前进度
+        curProgress = 0;
+
+        // 重新初始化关系映射
+        relation.clear();
+        relation[entrance] = Space("秘境1层");
+        relation[Space("秘境1层")] = Space("秘境2层");
+        relation[Space("秘境2层")] = Space("未知空间");
+        relation[Space("秘境2层")] = Space("秘境3层");
+        relation[Space("未知空间")] = Space("秘境3层");
+        relation[Space("秘境3层")] = Space("秘境4层");
+        relation[Space("秘境4层")] = Space("秘境5层");
+        relation[Space("秘境4层")] = Space("捷径空间");
+        relation[Space("秘境5层")] = Space("秘境核心");
+    }
+};
 };
 
 

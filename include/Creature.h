@@ -12,6 +12,7 @@
 #include "include/Item.h"
 
 /**
+ * @class Creature
  * @brief Creature 类表示游戏中的一个生物体，可以是玩家角色或敌对怪物。
  */
 class Creature {
@@ -87,6 +88,14 @@ public:
     void addSkill(std::string skillName, Skill skill) { skills[skillName] = skill; }
     // 为生物体添加一个物品
     void addItem(Item item) { inventory[item.getName()] = item; }
+
+    //是否死亡
+    bool isDead(){ return curHP<=0;}
+    // 虚函数：重置生物的基本属性
+    virtual void resetStats() {
+        setCurHp(getMaxHp());
+    }
+};
 };
 
 

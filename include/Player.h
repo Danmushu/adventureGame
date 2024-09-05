@@ -7,7 +7,7 @@
 #pragma once
 
 #include "Creature.h"
-#include "map.h"
+#include "Map.h"
 #include <string>
 #include <unistd.h>
 
@@ -142,6 +142,46 @@ public:
             }
         }
     }
+
+
+    /*** 宋家鹏 ***/
+    // 攻击怪物
+    void attack(Creature& target) {
+        // 简化处理：每次攻击减少固定的生命值
+        int strength = getStr();  // 假设力量值作为攻击力
+        target.setCurHp(target.getCurHp() - strength);
+        cout << "你造成了 " << strength << " 物理攻击！" << endl;
+    }
+
+    void reset() {
+        // 重置基本属性
+        level = 1;  // 假设初始等级为 1
+        curHP = maxHP = 100;  // 假设初始血量为 100
+        strength = 10;  // 假设初始力量为 10
+        defense = 10;  // 假设初始防御为 10
+        agility = 10;  // 假设初始敏捷为 10
+
+        // 重置气值
+        mp = requiredMp = 100;  // 假设初始气值为 100
+
+        // 清空技能列表
+        skills.clear();
+
+        // 清空物品列表
+        inventory.clear();
+
+        // 重置地图位置
+        map.reset();
+    }
+    // 重置基本属性
+    void resetStats() override {
+        curHP = maxHP;  // 重置当前生命值
+        mp = requiredMp;  // 重置气值
+    }
+    void setProgress(int progress) {
+        map.setProgress(progress);  // 调用 Map 类的 setProgress 方法
+    }
+};
 };
 
 #endif //ADVENTUREGAME_PLAYER_H

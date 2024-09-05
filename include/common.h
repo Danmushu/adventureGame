@@ -10,24 +10,13 @@
 #define MAP_WIDTH 300
 #define MAP_HEIGHT 500
 
-/*** 定义结构体 ***/
-typedef struct Feature{
-    int level;
-    int MaxHp;
-    int curHp;
-    int MaxMp;
-    int curMp;
-    int strength;
-    int defense;
-    int agility;
-}Feature;
-
 /*** 字体设置 ***/
 
 /*** 系统头文件 ***/
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <string>
 #include <synchapi.h>
 #include <fstream>
@@ -39,6 +28,27 @@ using namespace std;
 
 
 /*** 游戏头文件 ***/
+#include "interface.h"
+#include "Item.h"
+#include "Space.h"
+#include "Map.h"
+#include "Creature.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Battle.h"
+#include "GameController.h"
 
+
+
+/*** 游戏初始数据 ***/
+/* Monster */
+const unordered_set<Monster>
+/* Skill */
+
+/* Weapon */
+
+/* Medicine */
+
+/* Special */
 
 #endif //ADVENTUREGAME_COMMON_H

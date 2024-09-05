@@ -13,6 +13,7 @@
 #include "Item.h"
 #include "Monster.h"
 #include "fight.h"
+#include "interface.h"
 
 class Player;
 /**
@@ -39,7 +40,7 @@ public:
         towards.clear();
     }
     // todo 描述空间
-    inline void describe() const {
+    void describe() const {
         // todo
     }
     // 设置空间中的物品列表
@@ -90,6 +91,14 @@ public:
            cout << "这个物品不存在在这个空间" << endl;
            return {};
        }
+    }
+
+    // 展示空间中的怪兽状态，返回一个
+    void showMonster(){
+        for(int i=0; i<monsters.size(); i++){
+            cout<< i+1 << ". ";
+            monsters[i].printInfo();
+        }
     }
 };
 // 在std命名空间中对std::hash进行特化
